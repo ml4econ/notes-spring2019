@@ -16,7 +16,7 @@ class: center, middle, inverse, title-slide
 
 # Course Overview
 ### Itamar Caspi
-### March 10, 2019 (updated: 2019-03-08)
+### March 10, 2019 (updated: 2019-03-09)
 
 ---
 
@@ -222,7 +222,7 @@ There are __no__ required textbooks.
 A couple of suggestions:
 
 - [An Introduction to Statistical Learning with Applications in R (ISLR)](http://www-bcf.usc.edu/~gareth/ISL)  
-James, Hastie, Witten, and Tibshirani (2013)  
+James, Hastie, Witten, et al. (2013)  
 __PDF available online__ 
 
 - [The Elements of Statistical Learning (ELS)](http://statweb.stanford.edu/~tibs/ElemStatLearn)  
@@ -290,18 +290,32 @@ For instance, during this course we will make use of the [__causalTree__](https:
 
 ---
 
-# Assignments and Grading
+# DataCamp in the classroom
 
-Class assignments include:
 
-- [DataCamp Classroom](https://www.datacamp.com/enterprise/machine-learning-for-economists): you will be assigned with specific courses that will teach you essential R skills.
+&lt;img src="figs/datacamp1.gif" width="100%" style="display: block; margin: auto;" /&gt;
+
+
+---
+
+# Grading
+
+Assignments:
+
+- [DataCamp Classroom](https://www.datacamp.com/enterprise/machine-learning-for-economists): you will be assigned with specific courses that will teach you essential R programming skills.
+
+- Problem sets.
+
+
+Projects: 
 
 - [Kaggle](https://www.kaggle.com/c/55750-machine-learning-for-economists-huji-2019#) prediction competition: predict median house value in Boston area.
 
-- Final project: TBA.
+- Conduct a replication study based on one of the datasets included in the [experimentdatar](https://itamarcaspi.github.io/experimentdatar/) package.
 
-
+.center[
 __GRADING:__ Assingments __20%__, project __40%__, final exam __40%__.
+]
 
 ???
 
@@ -312,18 +326,31 @@ __GRADING:__ Assingments __20%__, project __40%__, final exam __40%__.
 
 ---
 
-# DataCamp
-
-
-&lt;img src="figs/datacamp1.gif" width="100%" style="display: block; margin: auto;" /&gt;
-
----
-
 # Kaggle
 
 &lt;img src="figs/kaggle.gif" width="100%" style="display: block; margin: auto;" /&gt;
 
+---
 
+# experimentdatar
+
+We will also  make use of he [`experimentdatar`](https://itamarcaspi.github.io/experimentdatar/) data package that contains publicly available datasets that were used in Susan Athey and Guido Imbens' course ["Machine Learning and Econometrics"](https://www.aeaweb.org/conference/cont-ed/2018-webcasts) (AEA continuing Education, 2018).
+
+- You can install the **development** version from
+[GitHub](https://github.com/itamarcaspi/experimentdatar/)
+```r
+# install.packages("devtools")
+devtools::install_github("itamarcaspi/experimentdatar")
+```
+
+- __EXAMPLE:__ Load the [`experimentdatar`](https://itamarcaspi.github.io/experimentdatar/) package and the `social` dataset:
+```r
+library(experimentdatar)
+data(social)  
+```
+- Tips:  
+  1. Runnig `?social` privides variable definitions.
+  2. Running `dataDetails("social")` will open a link to the paper associated with `social`.
 
 ---
 class: title-slide-section-blue, center, middle

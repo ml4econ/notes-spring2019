@@ -332,29 +332,7 @@ For instance, during this course we will make use of the [__causalTree__](https:
 
 ---
 
-# Assignments and Grading
-
-Class assignments include:
-
-- [DataCamp Classroom](https://www.datacamp.com/enterprise/machine-learning-for-economists): you will be assigned with specific courses that will teach you essential R skills.
-
-- [Kaggle](https://www.kaggle.com/c/55750-machine-learning-for-economists-huji-2019#) prediction competition: predict median house value in Boston area.
-
-- Final project: TBA.
-
-
-__GRADING:__ Assingments __20%__, project __40%__, final exam __40%__.
-
-???
-
-* DataCamp for the Classroom offer of high-quality, self-paced content and straightforward, easy-to-use interface for both students and instructors. In particular, enrolling to our ml4e DataCamp for the Classroom account will enable you 100% free access to all of DataCamp’s content, including their premium content.  
-
-* One of your tasks in this course will be a [Kaggle](https://www.kaggle.com) competition. In this competition, you will rely on the “Boston Housing Data” to train and test machine learning models learned in the course. In particular, you will be required to apply the tools introduced in the course in order to predict the median house value based on a set of area specific housing market features. For more details, please visit the competition’s [website](https://www.kaggle.com/t/97eb0edcbe7c406882c7c067076bedd3).
-  
-
----
-
-# DataCamp
+# DataCamp in the classroom
 
 
 ```{r datacamp, echo=FALSE, out.width = "100%", fig.align='center'}
@@ -362,6 +340,35 @@ __GRADING:__ Assingments __20%__, project __40%__, final exam __40%__.
 knitr::include_graphics("figs/datacamp1.gif")
 
 ```
+
+
+---
+
+# Grading
+
+Assignments:
+
+- [DataCamp Classroom](https://www.datacamp.com/enterprise/machine-learning-for-economists): you will be assigned with specific courses that will teach you essential R programming skills.
+
+- Problem sets.
+
+
+Projects: 
+
+- [Kaggle](https://www.kaggle.com/c/55750-machine-learning-for-economists-huji-2019#) prediction competition: predict median house value in Boston area.
+
+- Conduct a replication study based on one of the datasets included in the [experimentdatar](https://itamarcaspi.github.io/experimentdatar/) package.
+
+.center[
+__GRADING:__ Assingments __20%__, project __40%__, final exam __40%__.
+]
+
+???
+
+* DataCamp for the Classroom offer of high-quality, self-paced content and straightforward, easy-to-use interface for both students and instructors. In particular, enrolling to our ml4e DataCamp for the Classroom account will enable you 100% free access to all of DataCamp’s content, including their premium content.  
+
+* One of your tasks in this course will be a [Kaggle](https://www.kaggle.com) competition. In this competition, you will rely on the “Boston Housing Data” to train and test machine learning models learned in the course. In particular, you will be required to apply the tools introduced in the course in order to predict the median house value based on a set of area specific housing market features. For more details, please visit the competition’s [website](https://www.kaggle.com/t/97eb0edcbe7c406882c7c067076bedd3).
+  
 
 ---
 
@@ -373,7 +380,27 @@ knitr::include_graphics("figs/kaggle.gif")
 
 ```
 
+---
 
+# experimentdatar
+
+We will also  make use of he [`experimentdatar`](https://itamarcaspi.github.io/experimentdatar/) data package that contains publicly available datasets that were used in Susan Athey and Guido Imbens' course ["Machine Learning and Econometrics"](https://www.aeaweb.org/conference/cont-ed/2018-webcasts) (AEA continuing Education, 2018).
+
+- You can install the **development** version from
+[GitHub](https://github.com/itamarcaspi/experimentdatar/)
+```r
+# install.packages("devtools")
+devtools::install_github("itamarcaspi/experimentdatar")
+```
+
+- __EXAMPLE:__ Load the [`experimentdatar`](https://itamarcaspi.github.io/experimentdatar/) package and the `social` dataset:
+```r
+library(experimentdatar)
+data(social)  
+```
+- Tips:  
+  1. Runnig `?social` privides variable definitions.
+  2. Running `dataDetails("social")` will open a link to the paper associated with `social`.
 
 ---
 class: title-slide-section-blue, center, middle
