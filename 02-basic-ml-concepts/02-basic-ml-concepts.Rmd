@@ -516,7 +516,9 @@ __QUESTION:__ Is this a general result? Why?
 ---
 # Regressions and the bias-variance trade-off
 
-$$income=\beta_0+\beta_1 consumption_i+\varepsilon_i$$
+
+
+$$income_i=\beta_0+\beta_1 \times consumption_i+\varepsilon_i$$
 
 ```{r cons_data}
 
@@ -527,8 +529,6 @@ df <- crossing(economist = c("A", "B", "C"),
   mutate(economist = as.factor(economist)) %>% 
   mutate(income = rnorm(n(), mean = 100, sd = 10)) %>% 
   mutate(consumption = 10 + 0.5 * income + rnorm(n(), sd = 10))
-
-knitr::kable(sample_n(df,6), format = "html")
 ```
 
 ---
