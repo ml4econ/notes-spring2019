@@ -516,7 +516,7 @@ __QUESTION:__ Is this a general result? Why?
 ---
 # Regressions and the bias-variance trade-off
 
-
+Consider the following hypothetical DGP:
 
 $$income_i=\beta_0+\beta_1 \times consumption_i+\varepsilon_i$$
 
