@@ -40,7 +40,9 @@ Here is a comment
 
 
 ---
-# R packages used to produce this presentation
+# Replicating this presentation
+
+R packages used to produce this presentation
 
 ```{r load packages, message=FALSE}
 
@@ -99,7 +101,7 @@ BibOptions(check.entries = FALSE,
            bib.style = "numeric", 
            cite.style = "authoryear", 
            style = "markdown",
-           hyperlink = FALSE, 
+           hyperlink = TRUE, 
            dashed = FALSE)
 bib <- ReadBib("refs/refs.bib", check = FALSE)
 ```
@@ -514,12 +516,14 @@ __QUESTION:__ Is this a general result? Why?
 ---
 # Regressions and the bias-variance trade-off
 
+$$income=\beta_0+\beta_1 consumption_i+\varepsilon_i$$
+
 ```{r cons_data}
 
-set.seed(1203) # for replicating the simulation
+set.seed(1505) # for replicating the simulation
 
 df <- crossing(economist = c("A", "B", "C"),
-         obs = 1:10) %>% 
+         obs = 1:20) %>% 
   mutate(economist = as.factor(economist)) %>% 
   mutate(income = rnorm(n(), mean = 100, sd = 10)) %>% 
   mutate(consumption = 10 + 0.5 * income + rnorm(n(), sd = 10))
@@ -557,6 +561,12 @@ df %>%
              color = economist)) +
   geom_point()
   
+```
+
+```{r cons_table}
+
+knitr::kable(sample_n(df,6), format = "html")
+
 ```
 ]
 .pull-right[
@@ -1165,8 +1175,14 @@ class: .title-slide-final, center, inverse, middle
 ---
 # References
 
-```{r, 'refs', results='asis', echo=FALSE, eval=TRUE}
-PrintBibliography(bib)
+```{r, 'refs1', results='asis', echo=FALSE, eval=TRUE}
+PrintBibliography(bib, start = 1, end = 5)
 ```
 
+---
+# References
+
+```{r, 'refs2', results='asis', echo=FALSE, eval=TRUE}
+PrintBibliography(bib, start = 6, end = 7)
+```
 

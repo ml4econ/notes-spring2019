@@ -16,7 +16,7 @@ class: center, middle, inverse, title-slide
 
 # Basic Machine Learning Concepts
 ### Itamar Caspi
-### March 10, 2019 (updated: 2019-03-08)
+### March 10, 2019 (updated: 2019-03-09)
 
 ---
 
@@ -37,7 +37,9 @@ Here is a comment
 
 
 ---
-# R packages used to produce this presentation
+# Replicating this presentation
+
+R packages used to produce this presentation
 
 
 ```r
@@ -124,7 +126,7 @@ name: concepts
 ---
 # So, what is ML?
 
-A concise definition by Athey (2018):
+A concise definition by [Athey (2018)](#bib-athey2018the):
 
 &lt;midd-blockquote&gt;
 "...[M]achine learning is a field
@@ -192,7 +194,7 @@ Applications:
 ---
 # Reinforcement learning (RL)
  
-A definition by Sutton and Barto (2018):
+A definition by [Sutton and Barto (2018)](#bib-sutton2018rli):
 
 &lt;midd-blockquote&gt;
 _"Reinforcement learning is learning what to do—how to map situations to actions—so as to maximize a numerical reward signal. The learner is not told which actions to take, but instead must discover which actions yield the most reward by trying them."_
@@ -268,7 +270,7 @@ In this case, `\(Y=\{spam, ham\}\)`, and `\(X\)` is the email text.
 
 ???
 
-A fascinating discussion on Amazon's shipping-then-shopping business model appears in the book ["Prediction Machines: The Simple Economics of Artificial Intelligence"](https://books.google.com/books/about/Prediction_Machines.html?id=wJY4DwAAQBAJ) (Agrawal, Gans, and Goldfarb, 2018).
+A fascinating discussion on Amazon's shipping-then-shopping business model appears in the book ["Prediction Machines: The Simple Economics of Artificial Intelligence"](https://books.google.com/books/about/Prediction_Machines.html?id=wJY4DwAAQBAJ) ([Agrawal, Gans, and Goldfarb, 2018](#bib-agrawal2018prediction)).
 ---
 # Supervised learning algorithms
 
@@ -308,7 +310,7 @@ $$ \text{big data} + \text{computational advancements} = \text{the rise of ML}$$
 ]
 
 .pull-right[
-The "two cultures" (Breiman, 2001):
+The "two cultures" ([Breiman, 2001](#bib-breiman2001statistical)):
 
 - Statisticians assume a data generating process and try to learn  about it using data (parameters, confidence intervals, assumptions.) 
 
@@ -411,39 +413,39 @@ Here a small sample from our simulated table:
  &lt;/thead&gt;
 &lt;tbody&gt;
   &lt;tr&gt;
-   &lt;td style="text-align:right;"&gt; 9 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 56 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 124 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 87 &lt;/td&gt;
    &lt;td style="text-align:right;"&gt; 80 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 56 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 63.0 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 87 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 78.5 &lt;/td&gt;
   &lt;/tr&gt;
   &lt;tr&gt;
-   &lt;td style="text-align:right;"&gt; 961 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 446 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 59 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 84 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 59 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 64.5 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:right;"&gt; 685 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 47 &lt;/td&gt;
    &lt;td style="text-align:right;"&gt; 73 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 66 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 73 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 71.5 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 47 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 58.5 &lt;/td&gt;
   &lt;/tr&gt;
   &lt;tr&gt;
-   &lt;td style="text-align:right;"&gt; 423 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 77 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 50 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 77 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 73.5 &lt;/td&gt;
-  &lt;/tr&gt;
-  &lt;tr&gt;
-   &lt;td style="text-align:right;"&gt; 152 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 74 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 97 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 74 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 72.0 &lt;/td&gt;
-  &lt;/tr&gt;
-  &lt;tr&gt;
-   &lt;td style="text-align:right;"&gt; 886 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 96 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 969 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 44 &lt;/td&gt;
    &lt;td style="text-align:right;"&gt; 76 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 96 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 83.0 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 44 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 57.0 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:right;"&gt; 413 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 83 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 68 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 83 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 76.5 &lt;/td&gt;
   &lt;/tr&gt;
 &lt;/tbody&gt;
 &lt;/table&gt;
@@ -466,8 +468,8 @@ Here a small sample from our simulated table:
  &lt;/thead&gt;
 &lt;tbody&gt;
   &lt;tr&gt;
-   &lt;td style="text-align:right;"&gt; 315.798 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 209.461 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 324.192 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 217.9963 &lt;/td&gt;
   &lt;/tr&gt;
 &lt;/tbody&gt;
 &lt;/table&gt;
@@ -481,12 +483,14 @@ __QUESTION:__ Is this a general result? Why?
 ---
 # Regressions and the bias-variance trade-off
 
+`$$income=\beta_0+\beta_1 consumption_i+\varepsilon_i$$`
+
 
 ```r
-set.seed(1203) # for replicating the simulation
+set.seed(1505) # for replicating the simulation
 
 df &lt;- crossing(economist = c("A", "B", "C"),
-         obs = 1:10) %&gt;% 
+         obs = 1:20) %&gt;% 
   mutate(economist = as.factor(economist)) %&gt;% 
   mutate(income = rnorm(n(), mean = 100, sd = 10)) %&gt;% 
   mutate(consumption = 10 + 0.5 * income + rnorm(n(), sd = 10))
@@ -505,40 +509,40 @@ knitr::kable(sample_n(df,6), format = "html")
  &lt;/thead&gt;
 &lt;tbody&gt;
   &lt;tr&gt;
-   &lt;td style="text-align:left;"&gt; C &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 9 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 100.44581 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 62.49223 &lt;/td&gt;
-  &lt;/tr&gt;
-  &lt;tr&gt;
-   &lt;td style="text-align:left;"&gt; C &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 10 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 98.77493 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 49.94868 &lt;/td&gt;
-  &lt;/tr&gt;
-  &lt;tr&gt;
    &lt;td style="text-align:left;"&gt; A &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 7 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 94.60740 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 63.16145 &lt;/td&gt;
-  &lt;/tr&gt;
-  &lt;tr&gt;
-   &lt;td style="text-align:left;"&gt; A &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 6 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 91.12396 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 51.34953 &lt;/td&gt;
-  &lt;/tr&gt;
-  &lt;tr&gt;
-   &lt;td style="text-align:left;"&gt; C &lt;/td&gt;
    &lt;td style="text-align:right;"&gt; 4 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 90.91519 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 56.47301 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 98.89330 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 49.65828 &lt;/td&gt;
   &lt;/tr&gt;
   &lt;tr&gt;
    &lt;td style="text-align:left;"&gt; C &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 5 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 101.32265 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 59.29134 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 14 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 84.94055 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 35.73597 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; C &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 3 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 97.83834 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 43.40877 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; A &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 10 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 102.69686 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 53.47575 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; C &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 8 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 109.78834 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 67.43844 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; A &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 12 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 103.71018 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 52.37188 &lt;/td&gt;
   &lt;/tr&gt;
 &lt;/tbody&gt;
 &lt;/table&gt;
@@ -570,6 +574,60 @@ df %&gt;%
              color = economist)) +
   geom_point()
 ```
+
+
+```r
+knitr::kable(sample_n(df,6), format = "html")
+```
+
+&lt;table&gt;
+ &lt;thead&gt;
+  &lt;tr&gt;
+   &lt;th style="text-align:left;"&gt; economist &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; obs &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; income &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; consumption &lt;/th&gt;
+  &lt;/tr&gt;
+ &lt;/thead&gt;
+&lt;tbody&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; C &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 10 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 101.46972 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 73.56694 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; B &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 14 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 83.02060 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 48.60142 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; B &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 7 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 87.02760 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 53.60143 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; B &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 17 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 98.31148 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 73.70551 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; A &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 13 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 91.38508 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 67.87680 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; A &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 2 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 119.22994 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 67.37099 &lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
 ]
 .pull-right[
 ![](02-basic-ml-concepts_files/figure-html/unnamed-chunk-15-1..svg)&lt;!-- --&gt;
@@ -811,7 +869,7 @@ name: ml_workflow
 
 .pull-left[
 
-We will use the `BostonHousing`: housing data for 506 census tracts of Boston from the 1970 census (Harrison Jr and Rubinfeld, 1978)
+We will use the `BostonHousing`: housing data for 506 census tracts of Boston from the 1970 census ([Harrison Jr and Rubinfeld, 1978](#bib-harrison1978hedonic))
 
 - `medv` (outcome): median value of owner-occupied homes in USD 1000's.
 - `lstat`(predictor): percentage of lower status of the population.
@@ -1103,7 +1161,7 @@ __TOY PROBLEM:__ Say that we find in the data that `coffee` is a good predictor 
 
 ???
 
-The title of this slide "To Explain or to Predict?" is the name of a must-read [paper](https://projecteuclid.org/euclid.ss/1294167961) by Shmueli (2010) that clarifies the distinction between predicting and explaining.
+The title of this slide "To Explain or to Predict?" is the name of a must-read [paper](https://projecteuclid.org/euclid.ss/1294167961) by [Shmueli (2010)](#bib-shmueli2010explain) that clarifies the distinction between predicting and explaining.
 
 ---
 # ML in aid of econometrics
@@ -1150,19 +1208,16 @@ economics and management_ 5.1 (1978), pp. 81-102.
 Statistical Learning: Data Mining, Inference, and Prediction,
 Second Edition_. Springer, Feb. 2009. ISBN: 9780387848570.
 
-[6] G. James, T. Hastie, D. Witten, et al. _An Introduction to
+---
+# References
+
+[1] G. James, T. Hastie, D. Witten, et al. _An Introduction to
 Statistical Learning: With Applications in R_. Springer Texts in
 Statistics. Springer London, Limited, 2013. ISBN: 9781461471370.
 
-[7] S. Mullainathan and J. Spiess. "Machine learning: an applied
+[2] S. Mullainathan and J. Spiess. "Machine learning: an applied
 econometric approach". In: _Journal of Economic Perspectives_ 31.2
 (2017), pp. 87-106.
-
-[8] G. Shmueli. "To explain or to predict?" In: _Statistical
-science_ 25.3 (2010), pp. 289-310.
-
-[9] R. S. Sutton and A. G. Barto. _Reinforcement Learning: An
-Introduction_. MIT Press, 2018.
     </textarea>
 <style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
 <script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
