@@ -16,27 +16,11 @@ class: center, middle, inverse, title-slide
 
 # Basic Machine Learning Concepts
 ### Itamar Caspi
-### March 10, 2019 (updated: 2019-03-09)
+### March 10, 2019 (updated: 2019-03-10)
 
 ---
 
 
-
-# An aside: about the structure of these slides
-
-- This slide deck was created using the R package [xaringan](https://slides.yihui.name/xaringan/#44) (/ʃæ.'riŋ.ɡæn/) and [Rmarkdown](https://rmarkdown.rstudio.com/).
-
-- Some slides include hidden comments. To view them, press __p__ on your keyboard
-
-&lt;img src="figs/comments.gif" width="80%" style="display: block; margin: auto;" /&gt;
-
-???
-
-Here is a comment
-
-
-
----
 # Replicating this presentation
 
 R packages used to produce this presentation
@@ -247,7 +231,7 @@ In this case, `\(Y=\{spam, ham\}\)`, and `\(X\)` is the email text.
 
 # Traditional vs. modern approach to supervised learning
 
-- Traditional: rules based, e.g., define dictionaries of "good" and "bad", and use it to classify text.
+- Traditional: rules based, e.g., define dictionaries of "good" and "bad" words, and use it to classify text.
 
 - Modern: learn from data, e.g., label text as "good" or "bad" and let the model estimate rules from (training) data.
 
@@ -295,9 +279,9 @@ $$ \text{big data} + \text{computational advancements} = \text{the rise of ML}$$
 
 - Nevertheless, 
 
-&lt;midd-blockquote&gt; "_[S]upervised learning [...] may involve high dimensions, non-linearities, binary variables, etc., but at the end of the day it’s still just regression._" &lt;/midd-blockqoute&gt;
+&lt;midd-blockquote&gt; "_[S]upervised learning [...] may involve high dimensions, non-linearities, binary variables, etc., but at the end of the day it’s still just regression._" .right[&amp;mdash; [__Francis X. Diebold__](https://fxdiebold.blogspot.com/2018/06/machines-learning-finance.html)]&lt;/midd-blockqoute&gt;
 
-.right[&amp;mdash; [Francis X. Diebold](https://fxdiebold.blogspot.com/2018/06/machines-learning-finance.html)]
+
 
 
 &lt;img src="figs/matrix.jpeg" width="25%" style="display: block; margin: auto;" /&gt;
@@ -453,7 +437,7 @@ Here a small sample from our simulated table:
 ---
 # The distribution of predictions
 
-&lt;img src="02-basic-ml-concepts_files/figure-html/unnamed-chunk-12-1..svg" style="display: block; margin: auto;" /&gt;
+&lt;img src="02-basic-ml-concepts_files/figure-html/unnamed-chunk-11-1..svg" style="display: block; margin: auto;" /&gt;
 
 ---
 
@@ -483,7 +467,9 @@ __QUESTION:__ Is this a general result? Why?
 ---
 # Regressions and the bias-variance trade-off
 
-`$$income=\beta_0+\beta_1 consumption_i+\varepsilon_i$$`
+Consider the following hypothetical DGP:
+
+`$$income_i=\beta_0+\beta_1 \times consumption_i+\varepsilon_i$$`
 
 
 ```r
@@ -494,7 +480,38 @@ df &lt;- crossing(economist = c("A", "B", "C"),
   mutate(economist = as.factor(economist)) %&gt;% 
   mutate(income = rnorm(n(), mean = 100, sd = 10)) %&gt;% 
   mutate(consumption = 10 + 0.5 * income + rnorm(n(), sd = 10))
+```
 
+---
+# Scatterplot of the data
+
+.pull-left[
+
+```r
+df %&gt;% 
+  ggplot(aes(x = consumption,
+             y = income)) +
+  geom_point()
+```
+]
+.pull-right[
+![](02-basic-ml-concepts_files/figure-html/unnamed-chunk-13-1..svg)&lt;!-- --&gt;
+]
+---
+# Split the sample between 3 economists
+
+.pull-left[
+
+```r
+df %&gt;% 
+  ggplot(aes(x = consumption,
+             y = income,
+             color = economist)) +
+  geom_point()
+```
+
+
+```r
 knitr::kable(sample_n(df,6), format = "html")
 ```
 
@@ -546,91 +563,9 @@ knitr::kable(sample_n(df,6), format = "html")
   &lt;/tr&gt;
 &lt;/tbody&gt;
 &lt;/table&gt;
-
----
-# Scatterplot of the data
-
-.pull-left[
-
-```r
-df %&gt;% 
-  ggplot(aes(x = consumption,
-             y = income)) +
-  geom_point()
-```
 ]
 .pull-right[
 ![](02-basic-ml-concepts_files/figure-html/unnamed-chunk-14-1..svg)&lt;!-- --&gt;
-]
----
-# Split the sample between 3 economists
-
-.pull-left[
-
-```r
-df %&gt;% 
-  ggplot(aes(x = consumption,
-             y = income,
-             color = economist)) +
-  geom_point()
-```
-
-
-```r
-knitr::kable(sample_n(df,6), format = "html")
-```
-
-&lt;table&gt;
- &lt;thead&gt;
-  &lt;tr&gt;
-   &lt;th style="text-align:left;"&gt; economist &lt;/th&gt;
-   &lt;th style="text-align:right;"&gt; obs &lt;/th&gt;
-   &lt;th style="text-align:right;"&gt; income &lt;/th&gt;
-   &lt;th style="text-align:right;"&gt; consumption &lt;/th&gt;
-  &lt;/tr&gt;
- &lt;/thead&gt;
-&lt;tbody&gt;
-  &lt;tr&gt;
-   &lt;td style="text-align:left;"&gt; C &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 10 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 101.46972 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 73.56694 &lt;/td&gt;
-  &lt;/tr&gt;
-  &lt;tr&gt;
-   &lt;td style="text-align:left;"&gt; B &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 14 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 83.02060 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 48.60142 &lt;/td&gt;
-  &lt;/tr&gt;
-  &lt;tr&gt;
-   &lt;td style="text-align:left;"&gt; B &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 7 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 87.02760 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 53.60143 &lt;/td&gt;
-  &lt;/tr&gt;
-  &lt;tr&gt;
-   &lt;td style="text-align:left;"&gt; B &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 17 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 98.31148 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 73.70551 &lt;/td&gt;
-  &lt;/tr&gt;
-  &lt;tr&gt;
-   &lt;td style="text-align:left;"&gt; A &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 13 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 91.38508 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 67.87680 &lt;/td&gt;
-  &lt;/tr&gt;
-  &lt;tr&gt;
-   &lt;td style="text-align:left;"&gt; A &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 2 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 119.22994 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 67.37099 &lt;/td&gt;
-  &lt;/tr&gt;
-&lt;/tbody&gt;
-&lt;/table&gt;
-]
-.pull-right[
-![](02-basic-ml-concepts_files/figure-html/unnamed-chunk-15-1..svg)&lt;!-- --&gt;
 ]
 
 ---
@@ -658,7 +593,7 @@ df %&gt;%
 ```
 ]
 .pull-right[
-![](02-basic-ml-concepts_files/figure-html/unnamed-chunk-16-1..svg)&lt;!-- --&gt;
+![](02-basic-ml-concepts_files/figure-html/unnamed-chunk-15-1..svg)&lt;!-- --&gt;
 ]
 ---
 # Overfitting: low Bias, high variance
@@ -685,7 +620,7 @@ df %&gt;%
 ```
 ]
 .pull-right[
-![](02-basic-ml-concepts_files/figure-html/unnamed-chunk-17-1..svg)&lt;!-- --&gt;
+![](02-basic-ml-concepts_files/figure-html/unnamed-chunk-16-1..svg)&lt;!-- --&gt;
 ]
 
 ---
@@ -713,7 +648,7 @@ df %&gt;%
 ```
 ]
 .pull-right[
-![](02-basic-ml-concepts_files/figure-html/unnamed-chunk-18-1..svg)&lt;!-- --&gt;
+![](02-basic-ml-concepts_files/figure-html/unnamed-chunk-17-1..svg)&lt;!-- --&gt;
 ]
 ---
 # The typical bias-variance trade-off in ML
@@ -758,7 +693,7 @@ only now, the sample size for each economist increases to `\(N=500\)`.
 
 ]
 .pull-right[
-![](02-basic-ml-concepts_files/figure-html/unnamed-chunk-20-1..svg)&lt;!-- --&gt;
+![](02-basic-ml-concepts_files/figure-html/unnamed-chunk-19-1..svg)&lt;!-- --&gt;
 ]
 
 
@@ -883,7 +818,7 @@ Examples: in green: linear relation `\((\lambda=1)\)`; in blue, `\(\lambda = 10\
 ]
 
 .pull-right[
-![](02-basic-ml-concepts_files/figure-html/unnamed-chunk-23-1..svg)&lt;!-- --&gt;
+![](02-basic-ml-concepts_files/figure-html/unnamed-chunk-22-1..svg)&lt;!-- --&gt;
 ]
  
  
@@ -1023,11 +958,9 @@ cv_mse
 
 Recall that the best performing model minimizes the CV-MSE.
  
-&lt;img src="02-basic-ml-concepts_files/figure-html/unnamed-chunk-29-1..svg" width="27%" style="display: block; margin: auto;" /&gt;
+&lt;img src="02-basic-ml-concepts_files/figure-html/unnamed-chunk-28-1..svg" width="25%" style="display: block; margin: auto;" /&gt;
 
-&lt;midd-blockquote&gt; _"[I]n reality there is rarely if ever a true underlying model, and even if there was a true underlying model, selecting that model will not necessarily give the best forecasts..."_ &lt;/midd-blockquote&gt;
-
-.right[&amp;mdash; [Rob J. Hyndman](https://robjhyndman.com/hyndsight/crossvalidation/)]
+&lt;midd-blockquote&gt; _"[I]n reality there is rarely if ever a true underlying model, and even if there was a true underlying model, selecting that model will not necessarily give the best forecasts..."_ .right[&amp;mdash; [__Rob J. Hyndman__](https://robjhyndman.com/hyndsight/crossvalidation/)] &lt;/midd-blockquote&gt;
 
 ---
 
@@ -1079,7 +1012,7 @@ For example, see how biased the prediction for high levels of `medv` are.
 ]
 
 .pull-right[
-![](02-basic-ml-concepts_files/figure-html/unnamed-chunk-31-1..svg)&lt;!-- --&gt;
+![](02-basic-ml-concepts_files/figure-html/unnamed-chunk-30-1..svg)&lt;!-- --&gt;
 ]
 
 ---
@@ -1108,9 +1041,10 @@ Apart from jargon (Training set vs. in-sample, test-set vs. out of sample, learn
 ---
 # ML and causal inference
 
-&lt;midd-blockquote&gt; _”Data are profoundly dumb about causal relationships.”_ 
+&lt;midd-blockquote&gt; _”Data are profoundly dumb about causal relationships.”_   
+.right[&amp;mdash; [__Pearl and Mackenzie, _The Book of Why___](http://bayes.cs.ucla.edu/WHY/)]
 &lt;/midd-blockquote&gt; 
-.right[&amp;mdash; [Pearl and Mackenzie, _The Book of Why_](http://bayes.cs.ucla.edu/WHY/)]
+
 
 Intervention violates the stable DGP assumption:
 
@@ -1134,7 +1068,7 @@ __TOY PROBLEM:__ Say that we find in the data that `coffee` is a good predictor 
 
 ]
 .pull-right[
-![](02-basic-ml-concepts_files/figure-html/unnamed-chunk-32-1..svg)&lt;!-- --&gt;
+![](02-basic-ml-concepts_files/figure-html/unnamed-chunk-31-1..svg)&lt;!-- --&gt;
 ]
 
 ???
@@ -1156,7 +1090,7 @@ __TOY PROBLEM:__ Say that we find in the data that `coffee` is a good predictor 
 
 ]
 .pull-right[
-![](02-basic-ml-concepts_files/figure-html/unnamed-chunk-33-1..svg)&lt;!-- --&gt;
+![](02-basic-ml-concepts_files/figure-html/unnamed-chunk-32-1..svg)&lt;!-- --&gt;
 ]
 
 ???
@@ -1183,12 +1117,14 @@ class: .title-slide-final, center, inverse, middle
 
 # `slides::end()`
 
-[&lt;i class="fa fa-github"&gt;&lt;/i&gt; Source code](https://github.com/huji-ml4econ/01-overview)  
+[&lt;i class="fa fa-github"&gt;&lt;/i&gt; Source code](https://raw.githack.com/ml4econ/notes-spring2019/master/02-basic-ml-concepts/02-basic-ml-concepts.html)  
 
 ---
 # References
 
-[1] A. Agrawal, J. Gans and A. Goldfarb. _Prediction Machines: The
+&lt;a
+name=bib-agrawal2018prediction&gt;&lt;/a&gt;[[1]](#cite-agrawal2018prediction)
+A. Agrawal, J. Gans and A. Goldfarb. _Prediction Machines: The
 Simple Economics of Artificial Intelligence_. Harvard Business
 Review Press, 2018.
 
@@ -1196,13 +1132,17 @@ Review Press, 2018.
 _The Economics of Artificial Intelligence: An Agenda_. University
 of Chicago Press, 2018.
 
-[3] L. Breiman. "Statistical modeling: The two cultures (with
-comments and a rejoinder by the author)". In: _Statistical
-science_ 16.3 (2001), pp. 199-231.
+&lt;a
+name=bib-breiman2001statistical&gt;&lt;/a&gt;[[3]](#cite-breiman2001statistical)
+L. Breiman. "Statistical modeling: The two cultures (with comments
+and a rejoinder by the author)". In: _Statistical science_ 16.3
+(2001), pp. 199-231.
 
-[4] D. Harrison Jr and D. L. Rubinfeld. "Hedonic housing prices
-and the demand for clean air". In: _Journal of environmental
-economics and management_ 5.1 (1978), pp. 81-102.
+&lt;a
+name=bib-harrison1978hedonic&gt;&lt;/a&gt;[[4]](#cite-harrison1978hedonic)
+D. Harrison Jr and D. L. Rubinfeld. "Hedonic housing prices and
+the demand for clean air". In: _Journal of environmental economics
+and management_ 5.1 (1978), pp. 81-102.
 
 [5] T. Hastie, R. Tibshirani and J. Friedman. _The Elements of
 Statistical Learning: Data Mining, Inference, and Prediction,
