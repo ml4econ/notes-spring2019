@@ -16,7 +16,7 @@ class: center, middle, inverse, title-slide
 
 # Basic Machine Learning Concepts
 ### Itamar Caspi
-### March 10, 2019 (updated: 2019-03-10)
+### March 10, 2019 (updated: 2019-03-11)
 
 ---
 
@@ -469,7 +469,7 @@ __QUESTION:__ Is this a general result? Why?
 
 Consider the following hypothetical DGP:
 
-`$$income_i=\beta_0+\beta_1 \times consumption_i+\varepsilon_i$$`
+`$$consumption_i=\beta_0+\beta_1 \times income_i+\varepsilon_i$$`
 
 
 ```r
@@ -489,8 +489,8 @@ df &lt;- crossing(economist = c("A", "B", "C"),
 
 ```r
 df %&gt;% 
-  ggplot(aes(x = consumption,
-             y = income)) +
+  ggplot(aes(y = income,
+             x = consumption)) +
   geom_point()
 ```
 ]
@@ -579,8 +579,8 @@ The model: unconditional mean
 
 ```r
 df %&gt;% 
-  ggplot(aes(x = consumption,
-             y = income,
+  ggplot(aes(y = consumption,
+             x = income,
              color = economist)) +
   geom_point() +
   geom_smooth(method = lm,
@@ -606,8 +606,8 @@ The model: high-degree polynomial
 
 ```r
 df %&gt;% 
-  ggplot(aes(x = consumption,
-             y = income,
+  ggplot(aes(y = consumption,
+             x = income,
              color = economist)) +
   geom_point() +
   geom_smooth(method = lm,
@@ -634,8 +634,8 @@ The model: linear regression
 
 ```r
 df %&gt;% 
-  ggplot(aes(x = consumption,
-             y = income,
+  ggplot(aes(y = consumption,
+             x = income,
              color = economist)) +
   geom_point() +
   geom_smooth(method = lm,
@@ -1128,9 +1128,10 @@ A. Agrawal, J. Gans and A. Goldfarb. _Prediction Machines: The
 Simple Economics of Artificial Intelligence_. Harvard Business
 Review Press, 2018.
 
-[2] S. Athey. "The impact of machine learning on economics". In:
-_The Economics of Artificial Intelligence: An Agenda_. University
-of Chicago Press, 2018.
+&lt;a name=bib-athey2018the&gt;&lt;/a&gt;[[2]](#cite-athey2018the) S. Athey.
+"The impact of machine learning on economics". In: _The Economics
+of Artificial Intelligence: An Agenda_. University of Chicago
+Press, 2018.
 
 &lt;a
 name=bib-breiman2001statistical&gt;&lt;/a&gt;[[3]](#cite-breiman2001statistical)
@@ -1144,20 +1145,16 @@ D. Harrison Jr and D. L. Rubinfeld. "Hedonic housing prices and
 the demand for clean air". In: _Journal of environmental economics
 and management_ 5.1 (1978), pp. 81-102.
 
-[5] T. Hastie, R. Tibshirani and J. Friedman. _The Elements of
-Statistical Learning: Data Mining, Inference, and Prediction,
-Second Edition_. Springer, Feb. 2009. ISBN: 9780387848570.
+&lt;a name=bib-shmueli2010explain&gt;&lt;/a&gt;[[5]](#cite-shmueli2010explain)
+G. Shmueli. "To explain or to predict?" In: _Statistical science_
+25.3 (2010), pp. 289-310.
 
 ---
 # References
 
-[1] G. James, T. Hastie, D. Witten, et al. _An Introduction to
-Statistical Learning: With Applications in R_. Springer Texts in
-Statistics. Springer London, Limited, 2013. ISBN: 9781461471370.
-
-[2] S. Mullainathan and J. Spiess. "Machine learning: an applied
-econometric approach". In: _Journal of Economic Perspectives_ 31.2
-(2017), pp. 87-106.
+&lt;a name=bib-sutton2018rli&gt;&lt;/a&gt;[[1]](#cite-sutton2018rli) R. S.
+Sutton and A. G. Barto. _Reinforcement Learning: An Introduction_.
+MIT Press, 2018.
     </textarea>
 <style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
 <script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>

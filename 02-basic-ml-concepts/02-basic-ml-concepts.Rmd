@@ -498,7 +498,7 @@ __QUESTION:__ Is this a general result? Why?
 
 Consider the following hypothetical DGP:
 
-$$income_i=\beta_0+\beta_1 \times consumption_i+\varepsilon_i$$
+$$consumption_i=\beta_0+\beta_1 \times income_i+\varepsilon_i$$
 
 ```{r cons_data}
 
@@ -518,8 +518,8 @@ df <- crossing(economist = c("A", "B", "C"),
 ```{r scatter, fig.show='hide', fig.retina=3}
 
 df %>% 
-  ggplot(aes(x = consumption,
-             y = income)) +
+  ggplot(aes(y = income,
+             x = consumption)) +
   geom_point()
   
 ```
@@ -566,8 +566,8 @@ $$Y_i = \beta_0+\varepsilon_i$$
 ```{r underfit, fig.width=6, fig.show='hide', fig.retina=3}
 
 df %>% 
-  ggplot(aes(x = consumption,
-             y = income,
+  ggplot(aes(y = consumption,
+             x = income,
              color = economist)) +
   geom_point() +
   geom_smooth(method = lm,
@@ -596,8 +596,8 @@ $$Y_i = \beta_0+\sum_{j=1}^{\lambda}\beta_jX_i^{\lambda}+\varepsilon_i$$
 ```{r overfit, fig.width=6, fig.show='hide', fig.retina=3}
 
 df %>% 
-  ggplot(aes(x = consumption,
-             y = income,
+  ggplot(aes(y = consumption,
+             x = income,
              color = economist)) +
   geom_point() +
   geom_smooth(method = lm,
@@ -627,8 +627,8 @@ $$Y_i = \beta_0+\beta_1 X_i + \varepsilon_i$$
 ```{r justfit, fig.width=6, fig.show='hide', fig.retina=3}
 
 df %>% 
-  ggplot(aes(x = consumption,
-             y = income,
+  ggplot(aes(y = consumption,
+             x = income,
              color = economist)) +
   geom_point() +
   geom_smooth(method = lm,
@@ -698,8 +698,8 @@ df <- crossing(economist = c("A", "B", "C"),
 ```
 
 ```{r big_n_plot, echo=FALSE, fig.width=6, fig.height=3, fig.show='hide', fig.retina=3}
-df %>% ggplot(aes(x = consumption,
-             y = income,
+df %>% ggplot(aes(y = consumption,
+             x = income,
              color = economist)) +
   geom_point() +
   geom_smooth(method = lm,
