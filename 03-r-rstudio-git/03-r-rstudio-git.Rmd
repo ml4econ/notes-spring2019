@@ -1,0 +1,67 @@
+---
+title: "R, RStudio, Git and GitHub"
+subtitle: ""
+author: "Itamar Caspi"
+date: "March 18, 2019 (updated: `r Sys.Date()`)"
+output:
+  xaringan::moon_reader:
+    css: [default, "style/middlebury.css", "style/middlebury-fonts.css"]
+    lib_dir: libs
+    nature:
+      highlightStyle: github
+      highlightLines: true
+      countIncrementalSlides: false
+      ratio: "16:9"
+      slideNumberFormat: |
+        <div class="progress-bar-container">
+          <div class="progress-bar" style="width: calc(%current% / %total% * 100%);">
+          </div>
+        </div>
+      
+---
+
+```{r setup, include=FALSE}
+options(htmltools.dir.version = FALSE)
+library(knitr)
+knitr::opts_chunk$set(eval = TRUE, echo = TRUE, warning = FALSE,
+                      message = FALSE, cache = FALSE)
+
+htmltools::tagList(rmarkdown::html_dependency_font_awesome())
+```
+
+```{r plots_and_figures, include=FALSE}
+
+library(ggplot2)
+theme_set(theme_gray(15))
+
+library(kableExtra)
+
+```
+
+```{r, references, echo=FALSE, cache=FALSE}
+library(RefManageR)
+BibOptions(check.entries = FALSE, 
+           bib.style = "numeric", 
+           cite.style = "authoryear", 
+           style = "markdown",
+           hyperlink = FALSE, 
+           dashed = FALSE)
+bib <- ReadBib("refs/refs.bib", check = FALSE)
+```
+
+
+
+---
+class: .title-slide-final, center, inverse, middle
+
+# `slides %>% end()`
+
+[<i class="fa fa-github"></i> Source code](https://raw.githack.com/ml4econ/notes-spring2019/master/01-overview/01-overview.html)  
+
+---
+# References
+
+```{r, 'refs', results='asis', echo=FALSE, eval=TRUE}
+PrintBibliography(bib)
+```
+
