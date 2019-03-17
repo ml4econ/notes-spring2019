@@ -1,36 +1,36 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+  <head>
+    <title>Reproducibile Projects and Version Control</title>
+    <meta charset="utf-8" />
+    <meta name="author" content="Itamar Caspi" />
+    <link href="libs/remark-css/default.css" rel="stylesheet" />
+    <link href="libs/font-awesome/css/all.css" rel="stylesheet" />
+    <link href="libs/font-awesome/css/v4-shims.css" rel="stylesheet" />
+    <link rel="stylesheet" href="style\middlebury.css" type="text/css" />
+    <link rel="stylesheet" href="style\middlebury-fonts.css" type="text/css" />
+  </head>
+  <body>
+    <textarea id="source">
+class: center, middle, inverse, title-slide
+
+# Reproducibile Projects and Version Control
+### Itamar Caspi
+### March 18, 2019 (updated: 2019-03-15)
+
 ---
-title: "Reproducibile Projects and Version Control"
-subtitle: ""
-author: "Itamar Caspi"
-date: "March 18, 2019 (updated: `r Sys.Date()`)"
-output:
-  xaringan::moon_reader:
-    css: [default, "style/middlebury.css", "style/middlebury-fonts.css"]
-    lib_dir: libs
-    nature:
-      highlightStyle: github
-      highlightLines: true
-      countIncrementalSlides: false
-      ratio: "16:9"
-      slideNumberFormat: |
-        <div class="progress-bar-container">
-          <div class="progress-bar" style="width: calc(%current% / %total% * 100%);">
-          </div>
-        </div>
-      
----
+
 
 # Replicating this presentation
 
 R packages used to produce this presentation
 
-```{r load packages, message=FALSE}
 
+```r
 library(knitr) # for presenting tables
 library(xaringan) # for rendering xaringan presentations
 library(tidyverse) # for data wrangling and plotting
 library(tidymodels) # for modelling the tidy way
-
 ```
 
 If you are missing a package, run the following command
@@ -42,40 +42,18 @@ install.packages("package_name")
 
 Alternatively, you can just use the [pacman](https://cran.r-project.org/web/packages/pacman/vignettes/Introduction_to_pacman.html) package that loads and installs packages:
 
-```{r pacman, message=FALSE, warning=FALSE, eval=FALSE}
 
+```r
 if (!require("pacman")) install.packages("pacman")
 
 pacman::p_load(tidyvers, tidymodels, knitr, xaringan)
-
-
 ```
 
-```{r setup, include=FALSE}
-options(htmltools.dir.version = FALSE)
-library(knitr)
-knitr::opts_chunk$set(eval = TRUE, echo = TRUE, warning = FALSE,
-                      message = FALSE, cache = FALSE)
 
-htmltools::tagList(rmarkdown::html_dependency_font_awesome())
-```
 
-```{r plots_and_figures, include=FALSE}
 
-ggplot2::theme_set(theme_gray(15))
 
-```
 
-```{r, references, echo=FALSE, cache=FALSE}
-library(RefManageR)
-BibOptions(check.entries = FALSE, 
-           bib.style = "numeric", 
-           cite.style = "authoryear", 
-           style = "markdown",
-           hyperlink = FALSE, 
-           dashed = FALSE)
-bib <- ReadBib("refs/refs.bib", check = FALSE)
-```
 
 
 
@@ -120,11 +98,7 @@ name: projects
 # An aside: Docker
 
 .pull-left[
-```{r, echo=FALSE, out.width = "100%", fig.align='center'}
-
-knitr::include_graphics("https://www.docker.com/sites/default/files/social/docker_facebook_share.png")
-
-```
+&lt;img src="https://www.docker.com/sites/default/files/social/docker_facebook_share.png" width="100%" style="display: block; margin: auto;" /&gt;
 ]
 
 .pull-right[
@@ -154,7 +128,7 @@ knitr::include_graphics("https://www.docker.com/sites/default/files/social/docke
   
   1. Use RStudio's project environment.  
   
-  2. Go to `Tools -> General Options -> General` and set the Save workspace to .RData on exit to **NEVER**.
+  2. Go to `Tools -&gt; General Options -&gt; General` and set the Save workspace to .RData on exit to **NEVER**.
 
 
 ---
@@ -192,18 +166,18 @@ name: tidyverse
 
 ---
 
-# Prerequisite: `%>%` is a pipe
+# Prerequisite: `%&gt;%` is a pipe
 
-- The "pipe" operator `%>%` introduced in the [`magrittr`](https://cran.r-project.org/web/packages/magrittr/vignettes/magrittr.html) package, is deeply rooted in the `tidyverse`.
+- The "pipe" operator `%&gt;%` introduced in the [`magrittr`](https://cran.r-project.org/web/packages/magrittr/vignettes/magrittr.html) package, is deeply rooted in the `tidyverse`.
 
-- To understand what `%>%` means, try associating it with the word "then".
+- To understand what `%&gt;%` means, try associating it with the word "then".
 
-- Instead of `y <- f(x)`, we type `y <- x %>% f()`. This might seen cumbersome at first, but consider the following two lines of code:
+- Instead of `y &lt;- f(x)`, we type `y &lt;- x %&gt;% f()`. This might seen cumbersome at first, but consider the following two lines of code:
 
 ```r
-> y <- h(g(f(x), z))
+&gt; y &lt;- h(g(f(x), z))
 
-> y <- x %>% f() %>% g(z) %>% h()
+&gt; y &lt;- x %&gt;% f() %&gt;% g(z) %&gt;% h()
 ```
 
 The second line of code should be read as: "take `x`, _then_ put it through `f()`, _then_ put the result through `g(. , z)`, _then_ put the result through `h()`, and finally, keep the result in y.
@@ -213,34 +187,30 @@ The second line of code should be read as: "take `x`, _then_ put it through `f()
 # Base R vs. the tidyverse
 
 - Consider the following data frame:
-```{r remedy001}
 
-df <- data.frame(x = rnorm(10),
+```r
+df &lt;- data.frame(x = rnorm(10),
                  y = rnorm(10),
                  z = rnorm(10))
-
 ```
 
 - Can you guess what this code chunk does?
-```{r remedy002}
 
-df_new <- df[, c("x", "y")]["x" > 0]
-df_new$xx <- df_new$x^2
-
+```r
+df_new &lt;- df[, c("x", "y")]["x" &gt; 0]
+df_new$xx &lt;- df_new$x^2
 ```
 
 --
 
 - How about this?
 
-```{r remedy003}
 
-df_new <- df %>% 
-  select(x, y) %>% 
-  filter(x > 0) %>% 
+```r
+df_new &lt;- df %&gt;% 
+  select(x, y) %&gt;% 
+  filter(x &gt; 0) %&gt;% 
   mutate(xx = x^2)
-  
-
 ```
 
 
@@ -266,10 +236,18 @@ As always,
 
 Which packages come with `tidyverse`?
 
-```{r remedy004}
 
+```r
 tidyverse::tidyverse_packages()
+```
 
+```
+##  [1] "broom"       "cli"         "crayon"      "dplyr"       "dbplyr"     
+##  [6] "forcats"     "ggplot2"     "haven"       "hms"         "httr"       
+## [11] "jsonlite"    "lubridate"   "magrittr"    "modelr"      "purrr"      
+## [16] "readr"       "readxl\n(&gt;=" "reprex"      "rlang"       "rstudioapi" 
+## [21] "rvest"       "stringr"     "tibble"      "tidyr"       "xml2"       
+## [26] "tidyverse"
 ```
 
 Note that not all these packages are loaded by default (e.g., `lubrudate`.)
@@ -336,11 +314,7 @@ name: git
 # Version control
 
 .pull-left[
-```{r, echo=FALSE, out.width = "90%", fig.align='center'}
-
-knitr::include_graphics("https://images-na.ssl-images-amazon.com/images/I/61h4UtvnGWL._SL1200_.jpg")
-
-```
+&lt;img src="https://images-na.ssl-images-amazon.com/images/I/61h4UtvnGWL._SL1200_.jpg" width="90%" style="display: block; margin: auto;" /&gt;
 ]
 
 .pull-right[
@@ -363,11 +337,7 @@ You get the picture...
 # Git
 
 .pull-left[
-```{r, echo=FALSE, out.width = "90%", fig.align='center'}
-
-knitr::include_graphics("https://git-scm.com/images/logos/downloads/Git-Icon-1788C.png")
-
-```
+&lt;img src="https://git-scm.com/images/logos/downloads/Git-Icon-1788C.png" width="90%" style="display: block; margin: auto;" /&gt;
 ]
 
 .pull-right[
@@ -399,11 +369,7 @@ knitr::include_graphics("https://git-scm.com/images/logos/downloads/Git-Icon-178
 # GitHub
 
 .pull-left[
-```{r, echo=FALSE, out.width = "90%", fig.align='center'}
-
-knitr::include_graphics("https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png")
-
-```
+&lt;img src="https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png" width="90%" style="display: block; margin: auto;" /&gt;
 ]
 
 .pull-right[
@@ -449,13 +415,13 @@ name: practice
 RStudio:
 
 1. Open RStudio
-2. File -> New Project -> New Directory -> New Project
+2. File -&gt; New Project -&gt; New Directory -&gt; New Project
 3. Name your project under "Directory name:". Make sure to check "Create git repository".
 
 GitHub Desktop:
 
 1. Open GitHub Desktop.
-2. File -> Add local repository.
+2. File -&gt; Add local repository.
 3. Set "Local path" to your RStudio project's folder.
 4. Publish local git repo on GitHub (choose private or public repo).
 
@@ -464,15 +430,102 @@ GitHub Desktop:
 ---
 class: .title-slide-final, center, inverse, middle
 
-# `slides %>% end()`
+# `slides %&gt;% end()`
 
-[<i class="fa fa-github"></i> Source code](https://raw.githack.com/ml4econ/notes-spring2019/master/03-r-git/03-r-git.html)  
+[&lt;i class="fa fa-github"&gt;&lt;/i&gt; Source code](https://raw.githack.com/ml4econ/notes-spring2019/master/03-r-git/03-r-git.html)  
 
 ---
 # References
+    </textarea>
+<style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script>var slideshow = remark.create({
+"highlightStyle": "github",
+"highlightLines": true,
+"countIncrementalSlides": false,
+"ratio": "16:9",
+"slideNumberFormat": "<div class=\"progress-bar-container\">   <div class=\"progress-bar\" style=\"width: calc(%current% / %total% * 100%);\">   </div> </div> "
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function(d) {
+  var s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})(document);
 
-```{r, 'refs', results='asis', echo=FALSE, eval=TRUE}
-PrintBibliography(bib)
-```
+(function(d) {
+  var el = d.getElementsByClassName("remark-slides-area");
+  if (!el) return;
+  var slide, slides = slideshow.getSlides(), els = el[0].children;
+  for (var i = 1; i < slides.length; i++) {
+    slide = slides[i];
+    if (slide.properties.continued === "true" || slide.properties.count === "false") {
+      els[i - 1].className += ' has-continuation';
+    }
+  }
+  var s = d.createElement("style");
+  s.type = "text/css"; s.innerHTML = "@media print { .has-continuation { display: none; } }";
+  d.head.appendChild(s);
+})(document);
+// delete the temporary CSS (for displaying all slides initially) when the user
+// starts to view slides
+(function() {
+  var deleted = false;
+  slideshow.on('beforeShowSlide', function(slide) {
+    if (deleted) return;
+    var sheets = document.styleSheets, node;
+    for (var i = 0; i < sheets.length; i++) {
+      node = sheets[i].ownerNode;
+      if (node.dataset["target"] !== "print-only") continue;
+      node.parentNode.removeChild(node);
+    }
+    deleted = true;
+  });
+})();</script>
 
+<script>
+(function() {
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
+  }
+})();
+</script>
 
+<script>
+slideshow._releaseMath = function(el) {
+  var i, text, code, codes = el.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+};
+slideshow._releaseMath(document);
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>
