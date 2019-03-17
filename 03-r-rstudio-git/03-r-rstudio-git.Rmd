@@ -444,7 +444,7 @@ name: practice
 
 ---
 
-# Suggested setup for a new R project
+# Suggested workflow for a new R project
 
 RStudio:
 
@@ -458,6 +458,25 @@ GitHub Desktop:
 2. File -> Add local repository.
 3. Set "Local path" to your RStudio project's folder.
 4. Publish local git repo on GitHub (choose private or public repo).
+
+---
+# Clone and sync a remote GitHub repository
+
+Cloning:
+
+1. Open GitHub Desktop.
+2. Open the remote repository.
+3. Click on "Clone or download".
+4. Set the local path of your cloned repo (e.g., "C:/Documents/CLONED_REPO".
+
+Syncing:
+
+1. Open GitHub Desktop.
+2. Change "Current repository" to the cloned repo.
+3. Click the "Fech origin" button.
+4. Pull any changes made on the remote repo.
+
+
 
 
 
