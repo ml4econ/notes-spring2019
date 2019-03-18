@@ -507,6 +507,6 @@ class: .title-slide-final, center, inverse, middle
 
 # `slides %>% end()`
 
-[<i class="fa fa-github"></i> Source code](https://raw.githack.com/ml4econ/notes-spring2019/master/03-reprod-vc/03-reprod-vc.html)  
+[<i class="fa fa-github"></i> Source code](https://github.com/ml4econ/notes-spring2019/tree/master/03-reprod-vc)  
 
 

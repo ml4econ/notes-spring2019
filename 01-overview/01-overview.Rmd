@@ -436,7 +436,7 @@ class: .title-slide-final, center, inverse, middle
 
 # `slides %>% end()`
 
-[<i class="fa fa-github"></i> Source code](https://raw.githack.com/ml4econ/notes-spring2019/master/01-overview/01-overview.html)  
+[<i class="fa fa-github"></i> Source code](https://github.com/ml4econ/notes-spring2019/tree/master/01-overview)  
 
 ---
 # References
