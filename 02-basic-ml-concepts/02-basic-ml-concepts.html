@@ -16,7 +16,7 @@ class: center, middle, inverse, title-slide
 
 # Basic Machine Learning Concepts
 ### Itamar Caspi
-### March 10, 2019 (updated: 2019-03-11)
+### March 10, 2019 (updated: 2019-03-18)
 
 ---
 
@@ -61,6 +61,7 @@ pacman::p_load(tidyvers, svglite, kabelExtra, RefManageR,
 
 
 ???
+
 
 Hat tip to Grant McDermott who introduced me the awesome __pacman__ package.
 
@@ -110,7 +111,7 @@ name: concepts
 ---
 # So, what is ML?
 
-A concise definition by [Athey (2018)](#bib-athey2018the):
+A concise definition by &lt;a name=cite-athey2018the&gt;&lt;/a&gt;[Athey (2018)](#bib-athey2018the):
 
 &lt;midd-blockquote&gt;
 "...[M]achine learning is a field
@@ -178,7 +179,7 @@ Applications:
 ---
 # Reinforcement learning (RL)
  
-A definition by [Sutton and Barto (2018)](#bib-sutton2018rli):
+A definition by &lt;a name=cite-sutton2018rli&gt;&lt;/a&gt;[Sutton and Barto (2018)](#bib-sutton2018rli):
 
 &lt;midd-blockquote&gt;
 _"Reinforcement learning is learning what to do—how to map situations to actions—so as to maximize a numerical reward signal. The learner is not told which actions to take, but instead must discover which actions yield the most reward by trying them."_
@@ -254,7 +255,7 @@ In this case, `\(Y=\{spam, ham\}\)`, and `\(X\)` is the email text.
 
 ???
 
-A fascinating discussion on Amazon's shipping-then-shopping business model appears in the book ["Prediction Machines: The Simple Economics of Artificial Intelligence"](https://books.google.com/books/about/Prediction_Machines.html?id=wJY4DwAAQBAJ) ([Agrawal, Gans, and Goldfarb, 2018](#bib-agrawal2018prediction)).
+A fascinating discussion on Amazon's shipping-then-shopping business model appears in the book ["Prediction Machines: The Simple Economics of Artificial Intelligence"](https://books.google.com/books/about/Prediction_Machines.html?id=wJY4DwAAQBAJ) &lt;a name=cite-agrawal2018prediction&gt;&lt;/a&gt;([Agrawal, Gans, and Goldfarb, 2018](#bib-agrawal2018prediction)).
 ---
 # Supervised learning algorithms
 
@@ -294,7 +295,7 @@ $$ \text{big data} + \text{computational advancements} = \text{the rise of ML}$$
 ]
 
 .pull-right[
-The "two cultures" ([Breiman, 2001](#bib-breiman2001statistical)):
+The "two cultures" &lt;a name=cite-breiman2001statistical&gt;&lt;/a&gt;([Breiman, 2001](#bib-breiman2001statistical)):
 
 - Statisticians assume a data generating process and try to learn  about it using data (parameters, confidence intervals, assumptions.) 
 
@@ -397,39 +398,39 @@ Here a small sample from our simulated table:
  &lt;/thead&gt;
 &lt;tbody&gt;
   &lt;tr&gt;
-   &lt;td style="text-align:right;"&gt; 124 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 87 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 500 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 79 &lt;/td&gt;
    &lt;td style="text-align:right;"&gt; 80 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 87 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 78.5 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 79 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 74.5 &lt;/td&gt;
   &lt;/tr&gt;
   &lt;tr&gt;
-   &lt;td style="text-align:right;"&gt; 446 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 59 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 84 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 59 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 64.5 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 139 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 82 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 77 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 82 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 76.0 &lt;/td&gt;
   &lt;/tr&gt;
   &lt;tr&gt;
-   &lt;td style="text-align:right;"&gt; 685 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 47 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 73 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 47 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 58.5 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 633 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 89 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 81 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 89 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 79.5 &lt;/td&gt;
   &lt;/tr&gt;
   &lt;tr&gt;
-   &lt;td style="text-align:right;"&gt; 969 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 44 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 280 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 89 &lt;/td&gt;
    &lt;td style="text-align:right;"&gt; 76 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 44 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 57.0 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 89 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 79.5 &lt;/td&gt;
   &lt;/tr&gt;
   &lt;tr&gt;
-   &lt;td style="text-align:right;"&gt; 413 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 83 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 68 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 83 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 76.5 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 127 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 80 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 53 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 80 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 75.0 &lt;/td&gt;
   &lt;/tr&gt;
 &lt;/tbody&gt;
 &lt;/table&gt;
@@ -452,8 +453,8 @@ Here a small sample from our simulated table:
  &lt;/thead&gt;
 &lt;tbody&gt;
   &lt;tr&gt;
-   &lt;td style="text-align:right;"&gt; 324.192 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 217.9963 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 355.085 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 227.8858 &lt;/td&gt;
   &lt;/tr&gt;
 &lt;/tbody&gt;
 &lt;/table&gt;
@@ -804,7 +805,7 @@ name: ml_workflow
 
 .pull-left[
 
-We will use the `BostonHousing`: housing data for 506 census tracts of Boston from the 1970 census ([Harrison Jr and Rubinfeld, 1978](#bib-harrison1978hedonic))
+We will use the `BostonHousing`: housing data for 506 census tracts of Boston from the 1970 census &lt;a name=cite-harrison1978hedonic&gt;&lt;/a&gt;([Harrison Jr and Rubinfeld, 1978](#bib-harrison1978hedonic))
 
 - `medv` (outcome): median value of owner-occupied homes in USD 1000's.
 - `lstat`(predictor): percentage of lower status of the population.
@@ -1095,7 +1096,7 @@ __TOY PROBLEM:__ Say that we find in the data that `coffee` is a good predictor 
 
 ???
 
-The title of this slide "To Explain or to Predict?" is the name of a must-read [paper](https://projecteuclid.org/euclid.ss/1294167961) by [Shmueli (2010)](#bib-shmueli2010explain) that clarifies the distinction between predicting and explaining.
+The title of this slide "To Explain or to Predict?" is the name of a must-read [paper](https://projecteuclid.org/euclid.ss/1294167961) by &lt;a name=cite-shmueli2010explain&gt;&lt;/a&gt;[Shmueli (2010)](#bib-shmueli2010explain) that clarifies the distinction between predicting and explaining.
 
 ---
 # ML in aid of econometrics

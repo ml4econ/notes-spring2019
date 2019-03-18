@@ -88,6 +88,7 @@ bib <- ReadBib("refs/refs.bib", check = FALSE)
 
 ???
 
+
 Hat tip to Grant McDermott who introduced me the awesome __pacman__ package.
 
 ---
@@ -952,7 +953,7 @@ cv_mse %>%
   geom_point() +
   # geom_errorbar(aes(ymax = mse + sd, ymin = mse - sd)) +
   geom_vline(xintercept = 5, color = "blue") +
-  labs(x = "Lambda", y = "5-fold CV MSE")
+  labs(x = "Lambda", y = "10-fold CV MSE")
 
 ```
 
