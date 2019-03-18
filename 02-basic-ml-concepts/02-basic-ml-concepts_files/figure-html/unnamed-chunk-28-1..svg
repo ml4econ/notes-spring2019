@@ -60,5 +60,5 @@
 <g clip-path='url(#cpMHw1MDR8NTA0fDA=)'><text x='357.16' y='469.46' style='font-size: 16.00px; fill: #4D4D4D; font-family: Arial;' textLength='22.24px' lengthAdjust='spacingAndGlyphs'>7.5</text></g>
 <g clip-path='url(#cpMHw1MDR8NTA0fDA=)'><text x='459.28' y='469.46' style='font-size: 16.00px; fill: #4D4D4D; font-family: Arial;' textLength='31.14px' lengthAdjust='spacingAndGlyphs'>10.0</text></g>
 <g clip-path='url(#cpMHw1MDR8NTA0fDA=)'><text x='246.88' y='491.40' style='font-size: 20.00px; font-family: Arial;' textLength='72.28px' lengthAdjust='spacingAndGlyphs'>Lambda</text></g>
-<g clip-path='url(#cpMHw1MDR8NTA0fDA=)'><text transform='translate(24.28,295.64) rotate(-90)' style='font-size: 20.00px; font-family: Arial;' textLength='132.27px' lengthAdjust='spacingAndGlyphs'>5-fold CV MSE</text></g>
+<g clip-path='url(#cpMHw1MDR8NTA0fDA=)'><text transform='translate(24.28,301.20) rotate(-90)' style='font-size: 20.00px; font-family: Arial;' textLength='143.39px' lengthAdjust='spacingAndGlyphs'>10-fold CV MSE</text></g>
 </svg>

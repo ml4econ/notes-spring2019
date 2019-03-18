@@ -1,5 +1,5 @@
 ---
-title: "Reproducibile Projects and Version Control"
+title: "Reproducible Projects and Version Control"
 subtitle: ""
 author: "Itamar Caspi"
 date: "March 18, 2019 (updated: `r Sys.Date()`)"
@@ -84,7 +84,7 @@ bib <- ReadBib("refs/refs.bib", check = FALSE)
 
 # Outline
 
-1. [Reproducability](#projects)
+1. [Reproducibility](#projects)
 
 2. [The Tidyverse](#tidyverse)
 
@@ -102,7 +102,7 @@ name: projects
 
 ---
 
-# Predictability
+# Reproducibility
 
 - Reproducible research allows anyone to generate your exact same results. 
 
@@ -112,7 +112,9 @@ name: projects
   - name the packages you used (including version numbers).
   - describe your R environment (R version number, operating system, etc.)
   
-- A "reproducible" state-of-mind means putting yourself in the shoes of the consumers, rather than producers, of your code.
+- Being in a "reproducible" state-of-mind means putting yourself in the shoes of the consumers, rather than producers, of your code.
+
+(In "consumers" I also include the future you!)
 
 
 ---
@@ -137,9 +139,6 @@ knitr::include_graphics("https://www.docker.com/sites/default/files/social/docke
 
 - For further details, see [rOpenSci's tutorial](http://ropenscilabs.github.io/r-docker-tutorial/).
 
-
-
-
 ]
 
 
@@ -148,25 +147,26 @@ knitr::include_graphics("https://www.docker.com/sites/default/files/social/docke
 # RStudio project environment
 
 
-- If your R script starts with `setwd()` or `rm(list=ls())` than are [doing something wrong](https://www.tidyverse.org/articles/2017/12/workflow-vs-script/)!  
+- If your R script starts with `setwd()` or `rm(list=ls())` then are [doing something wrong](https://www.tidyverse.org/articles/2017/12/workflow-vs-script/)!  
 
 - Instead:
   
   1. Use RStudio's project environment.  
   
-  2. Go to `Tools -> General Options -> General` and set the Save workspace to .RData on exit to **NEVER**.
+  2. Go to `Tools -> Global Options -> General` and set the "Save workspace to .RData on exit" to **NEVER**.
 
 
 ---
 
 # R Markdown
 
-R Markdown notebooks, by RStudio, are THE perfect tool for conducting reproducible research.
+- R Markdown notebooks, by RStudio, are perhaps THE go-to tool for conducting reproducible research in R.
 
 - The process of "knitting" an Rmd file starts with a clean slate.
 
+- An R Markdown file integrates text, code, links, figures, tables, and all that is related to your research project.
 
-An *.Rmd file is a "meta-document" that can be exported as a:
+- R Markdown is perfect for communicating research. One if its main advantages is that an *.Rmd file is a "meta-document" that can be exported as a:
 
   - document (word, PDF, html, markdown).
   - presentation (html, beamer, xaringan, power point)
@@ -174,7 +174,6 @@ An *.Rmd file is a "meta-document" that can be exported as a:
   - book ([`bookdown`](https://bookdown.org/home/)).
   - journal article ([`pagedown`](https://github.com/rstudio/pagedown))
   - dashboard ([`flexdashboards`](https://rmarkdown.rstudio.com/flexdashboard/)).
-
 
 
 
@@ -187,16 +186,13 @@ name: tidyverse
 ---------------
 
 
-
-
-
 ---
 
 # Prerequisite: `%>%` is a pipe
 
 - The "pipe" operator `%>%` introduced in the [`magrittr`](https://cran.r-project.org/web/packages/magrittr/vignettes/magrittr.html) package, is deeply rooted in the `tidyverse`.
 
-- To understand what `%>%` means, try associating it with the word "then".
+- To understand what `%>%` does, try associating it with the word "then".
 
 - Instead of `y <- f(x)`, we type `y <- x %>% f()`. This might seen cumbersome at first, but consider the following two lines of code:
 
@@ -252,12 +248,13 @@ the "tidyvers" code chunk should be read as "generate a new dataframe `df_new` b
 
 # The Tidyverse
 
+- Following a "tidy" approach makes your code more readable, and thus reproducible.
 
-I believe that there is a growing concencus in the #rstats community that we should [learn the tidyverse first](http://varianceexplained.org/r/teach-tidyverse/).
+- I believe that there is a growing consensus in the #rstats community that we should [learn the tidyverse first](http://varianceexplained.org/r/teach-tidyverse/).
 
-Nevertheless, note that the tidyverse is "utopian" in the sesnse that it strives toward perfection, and thus keeps changing. by contrast, base R is built to last.
+- Nevertheless, note that the tidyverse is "Utopian" in the sense that it strives toward _perfection_, and thus keeps changing. By contrast, base R was built to last.
 
-As always, 
+- As usual, begin proficient in both (base R and the tidyverse) will get you far...
 
 
 ---
@@ -274,42 +271,45 @@ tidyverse::tidyverse_packages()
 
 Note that not all these packages are loaded by default (e.g., `lubrudate`.)
 
-We now breifly introduce two tidyvers' flagships: `dplyr` and `ggplot2`.
+We now briefly introduce one the tidyvers flagships: `dplyr`.
 
 ---
 
-# `dplyr`: The grammer of data manipulation
+# `dplyr`: The grammar of data manipulation
 
-- Tidymodels extends the tidyverse philosophy to modelling tasks.
+`dplyr` is THE go-to tool for data manipulation
 
 - Key "verbs":
 
   - `filter()` - selects observations (rows).
   - `select()` - selects variables (columns).
-  - `mutate()` - generate new variabels (columns).
+  - `mutate()` - generate new variables (columns).
   - `arrange()` - sort observations (rows).
   - `summarise()` - summary statistics (by groups).
   
-- other useful verbs:
+- Other useful verbs:
   
   - `group_by()` - groups observations by variables.
+  - `sample_n()` - sample rows from a table.
   
 
-- and much more (see `dplyr` [documentation](https://dplyr.tidyverse.org/reference/index.html))
-
----
-
-# `ggplot2`: The grammer of graphics
-
-
-
-
+- And much more (see `dplyr` [documentation](https://dplyr.tidyverse.org/reference/index.html))
 
 
 ---
 
-# Example: the recipies package
+# Tidymodels
 
+- Tidymodels extends the tidyverse "grammar" philosophy to modelling tasks.
+
+```{r tidymodels}
+
+tidymodels::tidymodels_packages()
+
+```
+
+
+For further details, visit the [tidymodels GitHub repo](https://github.com/tidymodels/tidymodels).
 
 
 ---
@@ -372,26 +372,16 @@ knitr::include_graphics("https://git-scm.com/images/logos/downloads/Git-Icon-178
 
 .pull-right[
 
-- Git is a version control system.
+- Git is a distributed version control system.
 
 - Huh?!
 
-- Sorry. Think of "track changes" for code projects.
+- Sorry. Think of MS Word "track changes" for code projects.
+
+- Git has established itself as the de-facto standard for version control and software collaboration.
 
 
 ]
-
-
----
-
-# TBA
-
-- 
-
-- Git is seamlessly integrted within RStudio projects.
-
-- GitHub Desktop is a great git client, that prefectly integrates GitHub. 
-
 
 
 ---
@@ -410,9 +400,9 @@ knitr::include_graphics("https://github.githubassets.com/images/modules/logos_pa
 
 - GitHub is a web-based hosting service for version control using Git.
 
-- Huh?!
+- OK, OK! Think of "Dropbox" for git projects. On steroids. And then some.
 
-- Sorry. Think of "Dropbox" for code on steroids.
+- GitHub is where and how a large share of open-source projects (e.g., R packages) are being developed.
 
 
 ]
@@ -442,15 +432,25 @@ name: practice
 # Let's practice!
 -----------------
 
+
+---
+# Your mission
+
+1. Open your first R project and publish it on GitHub.  
+
+2. Clone this course's lecture notes GitHub repository.
+
+
+
 ---
 
-# Suggested workflow for a new R project
+# Suggested workflow for starting a new R project
 
 RStudio:
 
-1. Open RStudio
-2. File -> New Project -> New Directory -> New Project
-3. Name your project under "Directory name:". Make sure to check "Create git repository".
+1. Open RStudio.
+2. File -> New Project -> New Directory -> New Project.
+3. Name your project under "Directory name:". Make sure to check "Create git repository".<sup>1</sup>
 
 GitHub Desktop:
 
@@ -458,6 +458,29 @@ GitHub Desktop:
 2. File -> Add local repository.
 3. Set "Local path" to your RStudio project's folder.
 4. Publish local git repo on GitHub (choose private or public repo).
+
+
+.footnote[
+<sup>1</sup> RStudio automatically generates a `.gitignore` file that tells git which files to ignore (duh!). Click [here](https://raw.githack.com/uo-ec607/lectures/master/02-git/02-Git.html#57) for further details on how to configure what to ignore. 
+]
+
+---
+
+# Git workflow
+
+The __pull -> stage -> commit -> push__ workflow:
+
+1. Open GitHub Desktop.
+2. Change "Current repository" to the cloned repo. 
+3. Click "Fetch origin" and __pull__ any changes made to the GitHub repo.
+4. Open your project.
+5. Make changes to one or more of your files.
+6. Save.
+7. __stage__ or unstage changed files.
+8. write a summary (and description) of your changes.
+9. Click "__Commit__ to master".  
+10. Update remote: Click "__Push__ origin" (Ctrl + P).
+
 
 ---
 # Clone and sync a remote GitHub repository
@@ -473,9 +496,8 @@ Syncing:
 
 1. Open GitHub Desktop.
 2. Change "Current repository" to the cloned repo.
-3. Click the "Fech origin" button.
-4. Pull any changes made on the remote repo.
-
+3. Click the "Fetch origin" button.
+4. __Pull__ any changes made on the remote repo.
 
 
 
@@ -486,12 +508,5 @@ class: .title-slide-final, center, inverse, middle
 # `slides %>% end()`
 
 [<i class="fa fa-github"></i> Source code](https://raw.githack.com/ml4econ/notes-spring2019/master/03-r-git/03-r-git.html)  
-
----
-# References
-
-```{r, 'refs', results='asis', echo=FALSE, eval=TRUE}
-PrintBibliography(bib)
-```
 
 
