@@ -155,7 +155,7 @@ class: .title-slide-final, center, inverse, middle
 
 # `slides %>% end()`
 
-[<i class="fa fa-github"></i> Source code]()  
+[<i class="fa fa-github"></i> Source code](https://raw.githack.com/ml4econ/notes-spring2019/master/a-kaggle/a-kaggle.html)  
 
 
 
