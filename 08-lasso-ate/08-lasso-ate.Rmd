@@ -546,6 +546,7 @@ Source: Mullainathan and Spiess (JEP 2017).
 - Roughly speaking, when it comes to satisfying sparsistency, $\lambda$ is set such that it selects non-zero $\beta$'s with high probability.
 
 
+
 ---
 class: title-slide-section-blue, center, middle
 name: ate
