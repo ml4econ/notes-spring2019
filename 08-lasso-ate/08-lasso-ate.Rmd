@@ -2,7 +2,7 @@
 title: "ML in Aid of Estimation: Part I"
 subtitle: "Lasso and ATE"
 author: "Itamar Caspi"
-date: "April 29, 2019 (updated: `r Sys.Date()`)"
+date: "May 5, 2019 (updated: `r Sys.Date()`)"
 output:
   xaringan::moon_reader:
     css: [default, "style/middlebury.css", "style/middlebury-fonts.css"]
