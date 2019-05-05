@@ -51,7 +51,7 @@ Alernatively, you can just use the [pacman](https://cran.r-project.org/web/packa
 
 if (!require("pacman")) install.packages("pacman")
 
-pacman::p_load(tidyvers, svglite, kabelExtra, RefManageR,
+pacman::p_load(tidyverse, svglite, kabelExtra, RefManageR,
                truncnorm, tidymodels, knitr, mlbench, ggdag)
 
 
