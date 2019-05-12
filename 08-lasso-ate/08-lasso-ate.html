@@ -17,7 +17,7 @@ class: center, middle, inverse, title-slide
 # ML in Aid of Estimation: Part I
 ## Lasso and ATE
 ### Itamar Caspi
-### May 5, 2019 (updated: 2019-05-05)
+### May 5, 2019 (updated: 2019-05-06)
 
 ---
 
@@ -171,7 +171,7 @@ In an RCT, the treatments are randomly assigned. This means entails that `\(D_i\
 
 RCTs enables us to estimate ATE using the average difference in outcomes by treatment status:
 
-`$$\begin{aligned} \mathbb{E}\left[Y_{i} | D_{i}=1\right]-\mathbb{E}\left[Y_{i} | D_{i}=0\right] &amp;=\mathbb{E}\left[Y_{1 i} | D_{i}=1\right]-\mathbb{E}\left[Y_{0} | D_{i}=0\right] \\ &amp;=\mathbb{E}\left[Y_{1 i} | D_{i}=1\right]-\mathbb{E}\left[Y_{0 i} | D_{i}=1\right] \\
+`$$\begin{aligned} \mathbb{E}\left[Y_{i} | D_{i}=1\right]-\mathbb{E}\left[Y_{i} | D_{i}=0\right] &amp;=\mathbb{E}\left[Y_{1 i} | D_{i}=1\right]-\mathbb{E}\left[Y_{0i} | D_{i}=0\right] \\ &amp;=\mathbb{E}\left[Y_{1 i} | D_{i}=1\right]-\mathbb{E}\left[Y_{0 i} | D_{i}=1\right] \\
 &amp;= \mathbb{E}\left[Y_{1 i}-Y_{0 i} | D_{i}=1\right] \\
 &amp;= \mathbb{E}\left[Y_{1 i}-Y_{0 i}\right] \\
 &amp;= \text{ATE}
@@ -361,7 +361,7 @@ where
 | Subset selection | `\(\lVert\boldsymbol{\beta}\rVert_0\)` |
 | __Lasso__ | `\(\lVert\boldsymbol{\beta}\rVert_1\)` |
 | Ridge | `\(\lVert\boldsymbol{\beta}\rVert_2^2\)` |
-| Elastic Net | `\(\alpha\lVert\boldsymbol{\beta}\rVert_0 + (1-\alpha)\lVert\boldsymbol{\beta}\rVert_2^2\)` |
+| Elastic Net | `\(\alpha\lVert\boldsymbol{\beta}\rVert_1 + (1-\alpha)\lVert\boldsymbol{\beta}\rVert_2^2\)` |
 
 
 __NOTE:__ We assume throughout that both `\(Y_i\)` and the elements in `\({X}_i\)` have been standardized so that they have mean zero and unit variance.
@@ -399,13 +399,13 @@ We can asses the quality of the Lasso in several ways:
 
 I. Prediction quality
 
-`$$\text{Loss}_{\text{ pred }}\left(\widehat{\boldsymbol{\beta}} ; \boldsymbol{\beta}^{0}\right)=\frac{1}{N}\left\|\mathbf{X}^{} \widehat{\boldsymbol{\beta}}-\mathbf{X}^{} \boldsymbol{\beta}^{0}\right\|_{2}^{2}$$`
+`$$\text{Loss}_{\text{ pred }}\left(\widehat{\boldsymbol{\beta}} ; \boldsymbol{\beta}^{0}\right)=\frac{1}{N}\left\|(\widehat{\boldsymbol{\beta}}- \boldsymbol{\beta}^{0})\mathbf{X}^{}\right\|_{2}^{2}=\frac{1}{N}\sum_{j=1}^k\left[(\hat{\beta}_j-\beta^0_j)\mathbf{X}_{(j)}\right]^2$$`
 
 II. Parameter consistency
 
-`$$\text{Loss}_{\text{param}}\left(\widehat{\boldsymbol{\beta}} ; \boldsymbol{\beta}^{*}\right)=\left\|\widehat{\boldsymbol{\beta}}-\boldsymbol{\beta}^{0}\right\|_{2}^{2}$$`
+`$$\text{Loss}_{\text{param}}\left(\widehat{\boldsymbol{\beta}} ; \boldsymbol{\beta}^{*}\right)=\left\|\widehat{\boldsymbol{\beta}}-\boldsymbol{\beta}^{0}\right\|_{2}^{2}=\sum_{j=1}^k(\hat{\beta}-\beta^0)^2$$`
 
-III. Support recovery (sparsistency)
+III. Support recovery (sparsistency), e.g., `\(+1\)` if `\(\mathrm{sign}(\beta^0)=\mathrm{sign}(\beta_j)\)`, for all `\(j=1,\dots,k\)`, and zero otherwise.
 
 
 
@@ -426,7 +426,7 @@ III. Support recovery (sparsistency)
 
 ---
 
-# Critical assumption #1: Distinguishable betas
+# Critical assumption #1: Distinguishable sparse betas
 
 
 _Lower eigenvalue_: the min eigenvalue `\(\lambda_{\min }\)` of the sub-matrix `\(\mathbf{X}_S\)` is bounded away from zero.
@@ -460,7 +460,7 @@ Thus, the irrepresentability condition roughly states that we can distinguish th
 
 &lt;img src="figs/lassofolds.png" width="55%" style="display: block; margin: auto;" /&gt;
 
-Source: Mullainathan and Spiess (JEP 2017).
+Source: [Mullainathan and Spiess (JEP 2017)](https://www.aeaweb.org/articles/pdf/doi/10.1257/jep.31.2.87).
 
 
 
@@ -484,8 +484,6 @@ class: title-slide-section-blue, center, middle
 name: ate
 
 # Lasso in Aid of Causal Inference
-
-
 
 
 
@@ -607,11 +605,6 @@ __Restricted Sparse Eigenvalue Condition (RSEC)__ This condition puts bounds on 
 
 
 __Regularization Event__ The tuning parameter `\(\lambda\)` is to a value that it selects to correct model with probability of at least `\(p\)`, where `\(p\)` is set by the user. Further assumptions regarding the quantile function of the maximal value of the gradient of the objective function at `\(\boldsymbol{\beta}^0\)`, and the error term (homoskedasticity vs. heteroskedasticity). See Belloni et al. (2012) for further details.
-
-
-
-
-
 
 
 

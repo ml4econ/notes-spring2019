@@ -8,6 +8,8 @@
 
 8. [ML in Aid of Estimation, Part I: Lasso and ATE ](https://raw.githack.com/ml4econ/notes-spring2019/master/08-lasso-ate/08-lasso-ate.html)
 
+9. [ML in Aid of Estimation, Part II: Trees and CATE ](https://raw.githack.com/ml4econ/notes-spring2019/master/09-trees-cate/09-trees-cate.html)
+
 # Assignments
 
 A. [Kaggle Competition](https://raw.githack.com/ml4econ/notes-spring2019/master/a-kaggle/a-kaggle.html)
