@@ -179,12 +179,12 @@ For example, `\(x\)` might represent the subgroup of individuals below 18 years 
 
 - Roughly speaking, the more personalized we get, the less biased is our estimate
 
-`$$Bias(\widehat\tau)&gt;Bias(\widehat\tau(x))&lt;Bias(\widehat\tau_i)$$`
+`$$Bias(\widehat\tau)&gt;Bias(\widehat\tau(x))&gt;Bias(\widehat\tau_i)$$`
 
 
 - However, the more personalized we get, the more noisy is our estimate
 
-`$$Var(\tau)&lt;Var(\tau(x))&lt;Var(\tau_i)$$`
+`$$Var(\widehat\tau)&lt;Var(\widehat\tau(x))&lt;Var(\widehat\tau_i)$$`
 
 
 ---
@@ -245,8 +245,8 @@ Sample
 Observations
 - `\(N\)` - total number of observations
 - `\(N^{tr}\)` - size of the training sample
-- `\(N^{te}\)` - size of the  the test sample
-- `\(N^{tr}\)` - size of the  the estimation sample
+- `\(N^{te}\)` - size of the the test sample
+- `\(N^{est}\)` - size of the the estimation sample
 
 ]
 
@@ -390,7 +390,7 @@ In the context of causal trees, sample splitting amounts to constructing a tree 
 __Solution:__ Define `\(\widehat\tau_i\)` as the ATE within the leaf.
 
 Athey and Imbens consider two splitting rules: 
-1. Adaptive causal tree (CT-A):
+1. Adaptive causal tree (__CT-A__):
 
 `$$\begin{align}
 -\widehat{\mathrm{MSE}}_{\tau}\left(\mathcal{S}^{\mathrm{tr}}, \mathcal{S}^{\mathrm{tr}}, \Pi\right)&amp;=\underbrace{\frac{1}{N^{\mathrm{tr}}} \sum_{i \in \mathcal{S}^{\mathrm{tr}}} \hat{\tau}^{2}\left(X_{i} | \mathcal{S}^{\mathrm{tr}}, \Pi\right)}_{\text { Variance of treatment }} 
@@ -402,7 +402,7 @@ In words: perform split if it _increases_ treatment effect heterogeneity within 
 
 # Approach #2: Causal tree (CT)
 
-2. Honest causal tree (CT-A) which uses sample splitting:
+2. Honest causal tree (__CT-H__) which uses sample splitting:
 
 `$$\begin{align}
 -\widehat{\mathrm{EMSE}}_{\tau}\left(\mathcal{S}^{\mathrm{tr}}, N^{\mathrm{est}}, \Pi\right)&amp;=\underbrace{\frac{1}{N^{\mathrm{tr}}} \sum_{i \in \mathcal{S}^{\mathrm{tr}}} \hat{\tau}^{2}\left(X_{i} | \mathcal{S}^{\mathrm{tr}}, \Pi\right)}_{\text { Variance of treatment }}\\
@@ -652,7 +652,7 @@ Set seed for replication and rename the outcome and treatment variables
 ```r
 df &lt;- social %&gt;% 
   select(Y, D, X) %&gt;% 
-  rename(Y = outcome_voted, W = treat_neighbors)
+  rename(Y = outcome_voted, D = treat_neighbors)
 ```
 
 We will only use part of the sample to make things run faster
@@ -686,11 +686,11 @@ We now proceed to estimating the tree using the __CT-H__ approach:
 
 
 ```r
-tree &lt;- honest.causalTree("I(Y) ~ . - W",
+tree &lt;- honest.causalTree("I(Y) ~ . - D",
                   data=df_tr,
-                  treatment=df_tr$W,
+                  treatment=df_tr$D,
                   est_data=df_est,
-                  est_treatment=df_est$W,
+                  est_treatment=df_est$D,
                   split.Rule="CT",
                   split.Honest=TRUE,
                   split.Bucket=TRUE,
@@ -765,7 +765,7 @@ df_all_leaf &lt;- df_all %&gt;%
 Use `lm()` with interaction terms, e.g.,
 
 ```
-lm(Y ~ leaf + W * leaf - W - 1)
+lm(Y ~ leaf + D * leaf - D - 1)
 ```
 
 to estimate the average treatment effect within each leaf and to get confidence intervals:
@@ -773,8 +773,8 @@ to estimate the average treatment effect within each leaf and to get confidence 
 
 ```r
 df_all_lm  &lt;- df_all_leaf %&gt;% 
-  mutate(model = map(data, ~ lm(Y ~ leaf + W * leaf 
-                                - W - 1, data = .x))) %&gt;% 
+  mutate(model = map(data, ~ lm(Y ~ leaf + D * leaf 
+                                - D - 1, data = .x))) %&gt;% 
   mutate(tidy = map(model, broom::tidy, conf.int = TRUE)) %&gt;% 
   unnest(tidy)
 ```
@@ -811,6 +811,8 @@ Athey, S., &amp; Imbens, G. (2016). Recursive partitioning for heterogeneous cau
 Athey, S., Imbens, G. W., Kong, Y., &amp; Ramachandra, V. (2016). An Introduction to Recursive Partitioning for Heterogeneous Causal Effects Estimation Using `causalTree` package. 1–15.
 
 Davis, J.M. V &amp; Heller, S.B., 2017. Using Causal Forests to Predict Treatment Heterogeneity : An Application to Summer Jobs. _American Economic Review: Papers &amp; Proceedings_, 107(5), pp.546–550.
+
+Lundberg, I., 2017. Causal forests: A tutorial in high-dimensional causal inference. [https://scholar.princeton.edu/sites/default/files/bstewart/files/lundberg_methods_tutorial_reading_group_version.pdf](https://scholar.princeton.edu/sites/default/files/bstewart/files/lundberg_methods_tutorial_reading_group_version.pdf)
 
 Wager, S., &amp; Athey, S. (2018). Estimation and Inference of Heterogeneous Treatment Effects using Random Forests. _Journal of the American Statistical Association_, 113(523), 1228–1242.
     </textarea>
