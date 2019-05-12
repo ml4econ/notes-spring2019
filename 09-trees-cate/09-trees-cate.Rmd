@@ -396,7 +396,7 @@ __sample splitting:__ divide the data in half, compute the sequence of models on
 
 _COST_: this can lead to a significant loss of power,unless the sample size is large.
 
-_BENEFIT_: Valide inference (independent subsamples).
+_BENEFIT_: Valid inference (independent subsamples).
 
 
 In the context of causal trees, sample splitting amounts to constructing a tree using the training sample $\mathcal{S}^{tr}$ and estimating the effect using $\mathcal{S}^{est}$.
@@ -408,7 +408,7 @@ In the context of causal trees, sample splitting amounts to constructing a tree 
 __Solution:__ Define $\widehat\tau_i$ as the ATE within the leaf.
 
 Athey and Imbens consider two splitting rules: 
-1. Addaptive causal tree (CT-A):
+1. Adaptive causal tree (CT-A):
 
 $$\begin{align}
 -\widehat{\mathrm{MSE}}_{\tau}\left(\mathcal{S}^{\mathrm{tr}}, \mathcal{S}^{\mathrm{tr}}, \Pi\right)&=\underbrace{\frac{1}{N^{\mathrm{tr}}} \sum_{i \in \mathcal{S}^{\mathrm{tr}}} \hat{\tau}^{2}\left(X_{i} | \mathcal{S}^{\mathrm{tr}}, \Pi\right)}_{\text { Variance of treatment }} 
@@ -436,7 +436,7 @@ __In words:__ perform split if it _increases_ treatment effect heterogeneity _an
 
 Athey and Imbens (2016) consider two additional splitting rules:
 
-  1. Fit based trees: split is based on the goodness-of-fit of the _outcome_, where fitting tkes into account $D_i$.
+  1. Fit based trees: split is based on the goodness-of-fit of the _outcome_, where fitting takes into account $D_i$.
   
   2. Squared $T$-statistic trees: split according to largest value the square of the $t$-statistic for testing the null hypothesis that the average treatment effect is the same in the two potential leaves.
   
@@ -450,7 +450,7 @@ See Athey and Imbens (2016) for more details.
 
 - Cross validation in causal trees is based on the out-of-sample counterpart of the goodness-of-fit rule used for constructing the tree.
 
-- In particular, the training sampel is split to training $\mathcal{S}^{tr,tr}$ and validation $\mathcal{S}^{tr,cv}$ sets and pruning the tree is constructed based on $\mathcal{S}^{tr,tr}$ and validated using $\mathcal{S}^{tr,cv}$.
+- In particular, the training sample is split to training $\mathcal{S}^{tr,tr}$ and validation $\mathcal{S}^{tr,cv}$ sets and pruning the tree is constructed based on $\mathcal{S}^{tr,tr}$ and validated using $\mathcal{S}^{tr,cv}$.
 
 
 
@@ -466,7 +466,16 @@ See Athey and Imbens (2016) for more details.
 
 3. Using just $\mathcal{S^{est}}$, calculate $\tau(x\in\ell)$ within each terminal leaf $\ell$.  
 
+---
+# Notes on the implementation of causal trees
 
+- The causal tree algorithm is implemented in the [`causalTree`](https://github.com/susanathey/causalTree) package (Athey).
+
+- The user is required to select
+
+  - `minsize`: the minimum number of treatment and control observations in each leaf.
+  - `bucketNum` and `bucketMax`: used to guarantee that when we shift from one split point to the next, we add both treatment and control observations, leading to a smoother estimate of the goodness of fit function as a function of the split point.
+  
 
 ---
 # Extension: Causal forests (Wager and Athey, JASA 2018)
@@ -483,18 +492,18 @@ Causal Forests: As in the case of predictive trees, an individual causal tree ca
 6. Repeat 1-5 $B$ times.
 7. Define subject $i$'s CATE as $B^{-1}\sum_{j=1}^{B}\widehat\tau_b$.
 
-__NOTE: __The causal forest algorithm is implemented in the [`grf`](https://github.com/grf-labs/grf) package (Tibshirani, Athey, and Wager).
-
 
 ---
-# Notes on causal forests
+# Notes on the implementation of causal forests
 
-- The user is requiered to select
+- The causal forest algorithm is implemented in the [`grf`](https://github.com/grf-labs/grf) package (Tibshirani, Athey, and Wager).
 
-  - the number of trees.
-  - the subsample size.
+- The user is required to select
+
+  - number of trees.
+  - subsample size.
   - minimum number of treatment and control observations in each leaf.
-  - the number of variables considered at each split (`mtry`).
+  - number of variables considered at each split (`mtry`).
   
 
 - An excellent reference is Davis and Heller (2017) who apply causal forest to RCT that evaluates the impact of a summer jobs program on disadvantaged youth in Chicago.
@@ -727,7 +736,7 @@ pruned_tree <- prune(tree, cp = opcp)
 ---
 # The estimated tree
 
-```{r, echo=FALSE, out.width = "60%", fig.align='center'}
+```{r, echo=FALSE, out.width = "50%", fig.align='center'}
 rpart.plot(tree, type = 3, clip.right.labs = TRUE, branch = .3)
 ```
 
@@ -742,7 +751,7 @@ rpart.plot(pruned_tree, type = 3, clip.right.labs = TRUE, branch = .3)
 
 ---
 
-# Assign each observation to a specifit leaf
+# Assign each observation to a specific leaf
 
 Form a tibble which holds the training and estimation samples
 
@@ -769,7 +778,7 @@ df_all_leaf <- df_all %>%
 ---
 # Estimate CATE using the causal tree
 
-Use `lm()` with interaction trems, e.g.,
+Use `lm()` with interaction terms, e.g.,
 
 ```
 lm(Y ~ leaf + W * leaf - W - 1)
