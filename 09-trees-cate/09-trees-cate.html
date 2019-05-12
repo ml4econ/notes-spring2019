@@ -101,7 +101,7 @@ __Fundamental problem of causal inference__ (Holland, 1986): We cannot observe _
 
 # Random treatment assignment
 
-throughout this lecture, we assume that the treatments are randomly assigned. This means entails that `\(D_i\)` is _independent_ of potential outcomes, namely
+Throughout this lecture, we assume that the treatments are randomly assigned. This means entails that `\(D_i\)` is _independent_ of potential outcomes, namely
 
 `$$\{Y_{1i}, Y_{0i}\}  \perp D_i$$`
 
@@ -156,9 +156,11 @@ name: challenge
 
 # "Moving the goalpost"
 
-- Conditional average treatment effects (CATE) can be viewed as a compromise between ATE and personalized treatment effects.
+What we are really interested in are "personalized" treatment effects.
 
-- CATEs are ATEs for specific subgroup of individuals, where subgroups are classified based on the `\(X_i\)`'s. Formally,
+Conditional average treatment effects (CATE) can be viewed as a compromise between ATE and personalized treatment effects.
+
+CATEs are ATEs for specific subgroup of individuals, where subgroups are classified based on the `\(X_i\)`'s. Formally,
 
 
 `$$\text{CATE} = \tau(x) = \mathbb{E}[Y_{1i}-Y_{0i}|X_i = x, x\in \mathbb{X}]$$`
@@ -167,6 +169,22 @@ were now, `\(x\)` is some partition of the features space `\(\mathbb{X}\)`.
 
 For example, `\(x\)` might represent the subgroup of individuals below 18 years old who weight more than 75 kg. 
 
+
+---
+
+# Aside: Bias-variance trad-off in heterogeneous treatment effects
+
+
+- Again, ideally, we would like to know "personalized" treatment effects, i.e., the effect of treatment on an individual with `\(X_i=x\)`. 
+
+- Roughly speaking, the more personalized we get, the less biased is our estimate
+
+`$$Bias(\widehat\tau)&gt;Bias(\widehat\tau(x))&lt;Bias(\widehat\tau_i)$$`
+
+
+- However, the more personalized we get, the more noisy is our estimate
+
+`$$Var(\tau)&lt;Var(\tau(x))&lt;Var(\tau_i)$$`
 
 
 ---
@@ -194,26 +212,6 @@ __REMARK:__ The parameter `\(\gamma\)` has a causal interpretation only when `\(
 2. Lasso can be used when `\(k\gg n\)`, but can suffer from omitted variable bias (e.g., Lasso might drop some of the main effects).
 
 
----
-
-# Bias-variance trad-off in heterogeneous treatment effects
-
-
-- Ideally, we would like to know "personalized" treatment effects, i.e., the effect of treatment on an individual with `\(X_i=x\)`. 
-
-- Roughly speaking, the more personalized we get, the less biased is our estimate
-
-`$$Bias(\widehat\tau)&gt;Bias(\widehat\tau(x))&lt;Bias(\widehat\tau_i)$$`
-
-
-- However, the more personalized we get, the more noisy is our estimate
-
-`$$Var(\tau)&lt;Var(\tau(x))&lt;Var(\tau_i)$$`
-
-
-
-
-  
 
 
 ---
