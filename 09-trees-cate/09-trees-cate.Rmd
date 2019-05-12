@@ -73,11 +73,11 @@ bib <- ReadBib("refs/refs.bib", check = FALSE)
 
 # Outline
 
-1. [Why Study Heterogenous Treatment Effects (HTE)?](#cate)
+1. [Heterogenous Treatment Effects (HTE)](#cate)
 
-2. [Challenges in Estimating HTE](#split)
+2. [Challenges in Estimating HTE](#challenges)
 
-3. [Introducing Causal Trees](#trees)
+3. [Introducing Causal Trees (and Forests)](#trees)
 
 4. [Empirical Illustration using `causalTree`](#causalTree)
 
@@ -169,6 +169,12 @@ $$\tau(x) = \mathbb{E}[Y_{i1}-Y_{i0} | X_i = x]$$
 where $x$ is some specific value of $X_i$ or some range of values (a subspace of the feature space).
 
 ---
+class: title-slide-section-blue, center, middle
+name: challenge
+
+# Challenges in Estimating HTE
+
+---
 
 # "Moving the goalpost"
 
@@ -236,7 +242,7 @@ $$Var(\tau)<Var(\tau(x))<Var(\tau_i)$$
 class: title-slide-section-blue, center, middle
 name: trees
 
-# Causal Trees (and Forests)
+# Introducing Causal Trees (and Forests)
 
 
 ---

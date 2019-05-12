@@ -51,11 +51,11 @@ pacman::p_load(tidyverse,
 
 # Outline
 
-1. [Why Study Heterogenous Treatment Effects (HTE)?](#cate)
+1. [Heterogenous Treatment Effects (HTE)](#cate)
 
-2. [Challenges in Estimating HTE](#split)
+2. [Challenges in Estimating HTE](#challenges)
 
-3. [Introducing Causal Trees](#trees)
+3. [Introducing Causal Trees (and Forests)](#trees)
 
 4. [Empirical Illustration using `causalTree`](#causalTree)
 
@@ -147,6 +147,12 @@ Conditional treatment effect (CATE) is defined as
 where `\(x\)` is some specific value of `\(X_i\)` or some range of values (a subspace of the feature space).
 
 ---
+class: title-slide-section-blue, center, middle
+name: challenge
+
+# Challenges in Estimating HTE
+
+---
 
 # "Moving the goalpost"
 
@@ -214,7 +220,7 @@ __REMARK:__ The parameter `\(\gamma\)` has a causal interpretation only when `\(
 class: title-slide-section-blue, center, middle
 name: trees
 
-# Causal Trees (and Forests)
+# Introducing Causal Trees (and Forests)
 
 
 ---
