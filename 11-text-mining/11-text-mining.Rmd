@@ -20,18 +20,23 @@ output:
       
 ---
 
-```{r packages, echo=FALSE, message=FALSE, warning=FALSE}
+# Packages
+
+
+```{r packages, echo=TRUE, message=FALSE, warning=FALSE}
 
 if (!require("pacman"))
   install.packages("pacman")
 
-pacman::p_load(tidyverse,
-               quanteda,
+pacman::p_load(quanteda,
+               tidyverse,
                knitr,
                xaringan,
                RefManageR)
 
 ```
+
+The [`quanteda`](http://quanteda.io/) package is a Swiss army knife for handling text with R. More on that later.
 
 ```{r setup, include=FALSE}
 options(htmltools.dir.version = FALSE)
@@ -176,7 +181,7 @@ __WARNING:__  Use text prepossessing steps with care. These steps should be appl
 
 ---
 
-# Example of common preprocessing steps
+# Illustration of some common preprocessing steps
 
 Here, we remove stop words, punctuation, numbers, and stem words:
 ```{r}
