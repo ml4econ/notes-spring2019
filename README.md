@@ -10,6 +10,11 @@
 
 9. [ML in Aid of Estimation, Part II: Trees and CATE ](https://raw.githack.com/ml4econ/notes-spring2019/master/09-trees-cate/09-trees-cate.html)
 
+10. [Prediction Policy Problems ](https://raw.githack.com/ml4econ/notes-spring2019/master/10-pred-policy/10-pred-policy.html)
+
+11. [Text Mining ](https://raw.githack.com/ml4econ/notes-spring2019/master/11-text-mining/11-text-mining.html)
+
+
 # Assignments
 
 A. [Kaggle Competition](https://raw.githack.com/ml4econ/notes-spring2019/master/a-kaggle/a-kaggle.html)
