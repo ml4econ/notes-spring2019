@@ -56,7 +56,7 @@ name: data
 
 ---
 
-# Resources
+# Where to Start
 
 A great introduction to this topic, along with many empirical examples from the social sciences appear in Gentzkow, Kelly, and Taddy's __"Text as Data"__ (JEL forthcoming).
 
@@ -206,17 +206,13 @@ txt %&gt;% dfm(ngrams = 2L)
 ## Document-feature matrix of: 2 documents, 12 features (45.8% sparse).
 ## 2 x 12 sparse Matrix of class "dfm"
 ##       features
-## docs   shipment_of delivery_of of_gold of_silver gold_damaged
-##   doc1           1           0       1         0            1
-##   doc2           0           1       0         1            0
+## docs   shipment_of of_gold delivery_of gold_damaged damaged_in of_silver
+##   doc1           1       1           0            1          1         0
+##   doc2           0       0           1            0          0         1
 ##       features
-## docs   silver_arrived damaged_in arrived_in in_a a_fire a_silver
-##   doc1              0          1          0    1      1        0
-##   doc2              1          0          1    1      0        1
-##       features
-## docs   silver_truck
-##   doc1            0
-##   doc2            1
+## docs   in_a a_fire silver_arrived arrived_in a_silver silver_truck
+##   doc1    1      1              0          0        0            0
+##   doc2    1      0              1          1        1            1
 ```
 
 
@@ -327,16 +323,16 @@ sample_n(get_sentiments("loughran"),8)
 
 ```
 ## # A tibble: 8 x 2
-##   word             sentiment  
-##   &lt;chr&gt;            &lt;chr&gt;      
-## 1 aggravating      negative   
-## 2 tortuously       negative   
-## 3 depleting        negative   
-## 4 unreasonableness negative   
-## 5 assumptions      uncertainty
-## 6 revocations      negative   
-## 7 liquidated       negative   
-## 8 misstate         negative
+##   word           sentiment  
+##   &lt;chr&gt;          &lt;chr&gt;      
+## 1 losing         negative   
+## 2 rumors         uncertainty
+## 3 unsustainable  negative   
+## 4 spectacularly  positive   
+## 5 gain           positive   
+## 6 indefiniteness uncertainty
+## 7 allegations    negative   
+## 8 evades         negative
 ```
 
 
@@ -694,7 +690,7 @@ name: handson
 class: center, middle
 
 # Go to:
-##[`11-hands-on-text-as-data.Rmd`]()
+##[`11-hands-on-text-as-data.Rmd`](https://raw.githubusercontent.com/ml4econ/notes-spring2019/master/11-text-mining/11-hands-on-textmining.Rmd)
 
 
 

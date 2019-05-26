@@ -88,7 +88,7 @@ name: data
 
 ---
 
-# Resources
+# Where to Start
 
 A great introduction to this topic, along with many empirical examples from the social sciences appear in Gentzkow, Kelly, and Taddy's __"Text as Data"__ (JEL forthcoming).
 
@@ -731,7 +731,7 @@ name: handson
 class: center, middle
 
 # Go to:
-##[`11-hands-on-text-as-data.Rmd`]()
+##[`11-hands-on-text-as-data.Rmd`](https://raw.githubusercontent.com/ml4econ/notes-spring2019/master/11-text-mining/11-hands-on-textmining.Rmd)
 
 
 
