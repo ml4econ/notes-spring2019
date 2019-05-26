@@ -1,5 +1,5 @@
 ---
-title: "Text as Data"
+title: "Text Mining Hands-on"
 author: 
   name: Itamar Caspi
   affiliation: Hebrew University, ML for Economists, 2019
