@@ -176,13 +176,13 @@ __WARNING:__  Use text prepossessing steps with care. These steps should be appl
 
 ---
 
-# Example
+# Example of common preprocessing steps
 
 Here, we remove stop words, punctuation, numbers, and stem words:
 ```{r}
 txt <- c(doc1 = "Shipment of gold damaged in a fire",
-         doc2 = "Delivery of silver arrived in a silver truck",
-         doc3 = "Shipment of gold arrived in a truck" )
+         doc2 = "Delivery of silver, arrived in a silver truck",
+         doc3 = "Shipment of 2 Karats of gold arrived in a truck" )
 
 txt %>% dfm(remove = stopwords("english"),
             remove_punct = TRUE,

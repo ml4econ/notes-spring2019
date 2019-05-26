@@ -151,14 +151,14 @@ __WARNING:__  Use text prepossessing steps with care. These steps should be appl
 
 ---
 
-# Example
+# Example of common preprocessing steps
 
 Here, we remove stop words, punctuation, numbers, and stem words:
 
 ```r
 txt &lt;- c(doc1 = "Shipment of gold damaged in a fire",
-         doc2 = "Delivery of silver arrived in a silver truck",
-         doc3 = "Shipment of gold arrived in a truck" )
+         doc2 = "Delivery of silver, arrived in a silver truck",
+         doc3 = "Shipment of 2 Karats of gold arrived in a truck" )
 
 txt %&gt;% dfm(remove = stopwords("english"),
             remove_punct = TRUE,
@@ -167,13 +167,13 @@ txt %&gt;% dfm(remove = stopwords("english"),
 ```
 
 ```
-## Document-feature matrix of: 3 documents, 8 features (50.0% sparse).
-## 3 x 8 sparse Matrix of class "dfm"
+## Document-feature matrix of: 3 documents, 9 features (51.9% sparse).
+## 3 x 9 sparse Matrix of class "dfm"
 ##       features
-## docs   shipment gold damag fire deliveri silver arriv truck
-##   doc1        1    1     1    1        0      0     0     0
-##   doc2        0    0     0    0        1      2     1     1
-##   doc3        1    1     0    0        0      0     1     1
+## docs   shipment gold damag fire deliveri silver arriv truck karat
+##   doc1        1    1     1    1        0      0     0     0     0
+##   doc2        0    0     0    0        1      2     1     1     0
+##   doc3        1    1     0    0        0      0     1     1     1
 ```
 
 
@@ -206,13 +206,17 @@ txt %&gt;% dfm(ngrams = 2L)
 ## Document-feature matrix of: 2 documents, 12 features (45.8% sparse).
 ## 2 x 12 sparse Matrix of class "dfm"
 ##       features
-## docs   shipment_of of_gold delivery_of gold_damaged damaged_in of_silver
-##   doc1           1       1           0            1          1         0
-##   doc2           0       0           1            0          0         1
+## docs   shipment_of delivery_of of_gold of_silver gold_damaged
+##   doc1           1           0       1         0            1
+##   doc2           0           1       0         1            0
 ##       features
-## docs   in_a a_fire silver_arrived arrived_in a_silver silver_truck
-##   doc1    1      1              0          0        0            0
-##   doc2    1      0              1          1        1            1
+## docs   silver_arrived damaged_in arrived_in in_a a_fire a_silver
+##   doc1              0          1          0    1      1        0
+##   doc2              1          0          1    1      0        1
+##       features
+## docs   silver_truck
+##   doc1            0
+##   doc2            1
 ```
 
 
@@ -323,16 +327,16 @@ sample_n(get_sentiments("loughran"),8)
 
 ```
 ## # A tibble: 8 x 2
-##   word           sentiment  
-##   &lt;chr&gt;          &lt;chr&gt;      
-## 1 losing         negative   
-## 2 rumors         uncertainty
-## 3 unsustainable  negative   
-## 4 spectacularly  positive   
-## 5 gain           positive   
-## 6 indefiniteness uncertainty
-## 7 allegations    negative   
-## 8 evades         negative
+##   word        sentiment  
+##   &lt;chr&gt;       &lt;chr&gt;      
+## 1 seriously   negative   
+## 2 enables     positive   
+## 3 shut        negative   
+## 4 assumes     uncertainty
+## 5 regulating  litigious  
+## 6 obstruct    negative   
+## 7 deteriorate negative   
+## 8 severances  litigious
 ```
 
 
