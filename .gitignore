@@ -3,3 +3,5 @@
 .RData
 .Ruserdata
 /10-pred-policy
+/12-bandit-prob
+/archive
