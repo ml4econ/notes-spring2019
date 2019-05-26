@@ -93,10 +93,11 @@ name: data
 
 ---
 
-# Where to Start
+# Where to start
 
-A great introduction to this topic, along with many empirical examples from the social sciences appear in Gentzkow, Kelly, and Taddy's __"Text as Data"__ (JEL forthcoming).
+- A great introduction to text analysis, along with many empirical examples from the social sciences appear in Gentzkow, Kelly, and Taddy's __"Text as Data"__ (JEL forthcoming).
 
+- See also lecture notes by [Maximilian Kasy](https://maxkasy.github.io/home/files/teaching/TopicsEconometrics2019/TextAsData-Slides.pdf) (Harvard) and [Matt Taddy](https://github.com/TaddyLab/MBAcourse/blob/master/lectures/text.pdf) (Chicago and Amazon).
 
 ---
 
@@ -199,13 +200,13 @@ txt %>% dfm(remove = stopwords("english"),
 
 ---
 
-# Words are generally not independent
+# $n$-grams
 
 Sometimes we might care about multiword expressions, e.g., "not guilty", "labor market", etc. 
 
 We can define tokens (the basic element of text) as $n$-gram - a sequence of $n$ words from a given sample of text.
 
-NOTE: Using $n$-gram with $n$>2 is typically impractical due to the rapid growth in the dimensions of $\mathbf{X}$. 
+NOTE: Using $n$-gram with $n$>2 is typically impractical due to the fact that the column dimension of $\mathbf{X}$ increases exponentially with the order $n$.
 
 ---
 
@@ -251,7 +252,7 @@ name: reg
 
 ---
 
-# Sounds familiar...
+# This will sounds familiar...
 
 
 - We are interested in predicting some $Y$ using $\mathbf{X}$.
@@ -269,13 +270,15 @@ Can be easily extended to binary / categorical $Y$, e.g.`glmnet(X, Y, family = "
 
 ---
 
-# Practical notes about penalized text regression
+# Practical advice about using penalized text regression
 
 - Typically, DTM entries count the number of times word $i$ appears in document $d$. This provide "intuitive" interpretation for regression coefficients.
 
-- 
+- Depending on the application, Other transformation for $\mathbf{X}$ might be more appropriate, e.g.,
+  - normalization of each row by document length.
+  - binary inclusion dummy (instead of count).
 
-- Nevertheless, as usual, beware of giving causal interpretation to the Lasso's coefficients. (Recall the irrepresentability condition.)
+- Nevertheless, beware of giving a causal interpretation to the Lasso's coefficients. (Recall the irrepresentability condition.)
 
 
 
@@ -290,9 +293,13 @@ name: dict
 
 ---
 
-# Reducing dimensionality using a dictionary
+# Reducing dimensionality using dictionaries
 
 - Dictionary-based methods provide a low-dimensional representation of high-dimensional text.
+
+- This is by far the most common method in the social science literature using text to date (Gentzkow et al. forthcoming).
+
+- 
 
 - Essentially, Think of $F$ as an unobserved characteristic of the text that we are trying to estimate. A Dictionary-based methods provides a mapping from $\mathbf{X}$ onto $F$:
 
@@ -307,7 +314,7 @@ $$g: \mathbf{X}\rightarrow F$$
 
 - The latent factor we are trying to estimate is the writer's attitude towards the topic in question.
 
-- The most common approach is based on prespecified dictionaries that classify word according to some predefined sentiment class (e.g. "positive", "negative", and "neutral".)
+- The most common approach is based on pre-specified dictionaries that classify word according to some predefined sentiment class (e.g. "positive", "negative", and "neutral".)
 
 - Typically, the sentiment _score_ of each document is a function of the relative frequencies of positive, negative, neutral, etc., words.
 
@@ -567,7 +574,7 @@ knitr::include_graphics("figs/DynLDA.png")
 
 ---
 
-# Dynamic LDA: Science 1881-1999
+# Dynamic LDA: _Science_, 1881-1999
 
 The posterior estimate of the frequency as a function of year of several words from the two topics: "Theoretical Physics" and "Neuroscience":
 
