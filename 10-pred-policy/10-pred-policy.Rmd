@@ -334,10 +334,11 @@ Kleinberg, Lakkaraju, Leskovec, Ludwig, and Mullainathan (QJE 2018):
 
 
 ---
-class: .title-slide-final, center, inverse, middle
+class: center, middle
 
-# "HUMAN DECISIONS AND MACHINE PREDICTIONS"
-## Kleinberg, Lakkaraju, Leskovec, Ludwig, and Mullainathan (QJE, 2017)
+### For further details on prediction policy problems, we refer you to Susan Athey's presentation (at AEA Continuing Education 2018):
+
+[https://drive.google.com/open?id=1iE1fYivEfNFWjOzLqPKGrpSDEbPGzxcJ](https://drive.google.com/open?id=1iE1fYivEfNFWjOzLqPKGrpSDEbPGzxcJ)
 
 
 
