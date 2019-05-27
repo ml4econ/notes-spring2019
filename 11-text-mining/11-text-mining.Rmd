@@ -736,7 +736,7 @@ name: handson
 ---
 class: center, middle
 
-# Go to:
+# Continue to:
 ##[`11-hands-on-text-as-data.Rmd`](https://raw.githubusercontent.com/ml4econ/notes-spring2019/master/11-text-mining/11-hands-on-textmining.Rmd)
 
 

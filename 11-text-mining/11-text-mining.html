@@ -220,13 +220,13 @@ txt %&gt;% dfm(ngrams =2,
 ## Document-feature matrix of: 2 documents, 12 features (50.0% sparse).
 ## 2 x 12 sparse Matrix of class "dfm"
 ##       features
-## docs   shipment_of of_gold gold_damag damag_in in_a a_fire deliveri_of
-##   doc1           1       1          1        1    1      1           0
-##   doc2           0       0          0        0    0      0           1
+## docs   shipment_of of_gold deliveri_of gold_damag damag_in in_a of_silver
+##   doc1           1       1           0          1        1    1         0
+##   doc2           0       0           1          0        0    0         1
 ##       features
-## docs   of_silver silver_arriv arriv_in in_silver silver_truck
-##   doc1         0            0        0         0            0
-##   doc2         1            1        1         1            1
+## docs   a_fire silver_arriv arriv_in in_silver silver_truck
+##   doc1      1            0        0         0            0
+##   doc2      0            1        1         1            1
 ```
 
 
@@ -341,16 +341,16 @@ sample_n(get_sentiments("loughran"),8)
 
 ```
 ## # A tibble: 8 x 2
-##   word          sentiment
-##   &lt;chr&gt;         &lt;chr&gt;    
-## 1 eroded        negative 
-## 2 restatement   negative 
-## 3 profitability positive 
-## 4 offense       litigious
-## 5 overbuilding  negative 
-## 6 usurping      litigious
-## 7 abrogations   negative 
-## 8 inefficient   negative
+##   word          sentiment   
+##   &lt;chr&gt;         &lt;chr&gt;       
+## 1 contradictory negative    
+## 2 divested      negative    
+## 3 encumbrance   constraining
+## 4 uncompleted   negative    
+## 5 ingenuity     positive    
+## 6 impending     negative    
+## 7 exculpatory   negative    
+## 8 vitiates      negative
 ```
 
 
@@ -707,7 +707,7 @@ name: handson
 ---
 class: center, middle
 
-# Go to:
+# Continue to:
 ##[`11-hands-on-text-as-data.Rmd`](https://raw.githubusercontent.com/ml4econ/notes-spring2019/master/11-text-mining/11-hands-on-textmining.Rmd)
 
 
