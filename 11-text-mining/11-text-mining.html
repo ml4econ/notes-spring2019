@@ -16,7 +16,7 @@ class: center, middle, inverse, title-slide
 
 # Text Mining
 ### Itamar Caspi
-### May 26, 2019 (updated: 2019-05-26)
+### May 26, 2019 (updated: 2019-05-27)
 
 ---
 
@@ -30,6 +30,7 @@ if (!require("pacman"))
   install.packages("pacman")
 
 pacman::p_load(quanteda,
+               tidytext,
                tidyverse,
                knitr,
                xaringan,
@@ -122,30 +123,28 @@ __NOTE:__ Spam detection is clearly a supervised learning task where `\(Y_i=\{\t
 
 # Transforming a corpus to a DTM
 
-Consider the following corpus ($M=3$):
+Consider the following corpus `\((M=3)\)`:
 
 
 ```r
-txt &lt;- c(doc1 = "Shipment of gold damaged in a fire",
-         doc2 = "Delivery of silver arrived in a silver truck",
-         doc3 = "Shipment of gold arrived in a truck" )
+txt &lt;- c(doc1 = "Shipment of gold damaged in a fire.",
+         doc2 = "Delivery of silver, arrived in 2 silver trucks")
 
 txt %&gt;% quanteda::dfm() # transform text as a document term matrix
 ```
 
 ```
-## Document-feature matrix of: 3 documents, 11 features (36.4% sparse).
-## 3 x 11 sparse Matrix of class "dfm"
+## Document-feature matrix of: 2 documents, 14 features (42.9% sparse).
+## 2 x 14 sparse Matrix of class "dfm"
 ##       features
-## docs   shipment of gold damaged in a fire delivery silver arrived truck
-##   doc1        1  1    1       1  1 1    1        0      0       0     0
-##   doc2        0  1    0       0  1 1    0        1      2       1     1
-##   doc3        1  1    1       0  1 1    0        0      0       1     1
+## docs   shipment of gold damaged in a fire . delivery silver , arrived 2
+##   doc1        1  1    1       1  1 1    1 1        0      0 0       0 0
+##   doc2        0  1    0       0  1 0    0 0        1      2 1       1 1
+##       features
+## docs   trucks
+##   doc1      0
+##   doc2      1
 ```
-
-- `nrow(dfm_txt)` returns the number of documents in the corpus.
-- `ncol(dfm_txt)` returns the number of words in the vocabulary.
-- `colnames(dfm_txt)` returns the number of words in the vocabulary
 
 ???
 
@@ -172,9 +171,8 @@ __WARNING:__  Use text prepossessing steps with care. These steps should be appl
 Here, we remove stop words, punctuation, numbers, and stem words:
 
 ```r
-txt &lt;- c(doc1 = "Shipment of gold damaged in a fire",
-         doc2 = "Delivery of silver, arrived in a silver truck",
-         doc3 = "Shipment of 2 Karats of gold arrived in a truck" )
+txt &lt;- c(doc1 = "Shipment of gold damaged in a fire.",
+         doc2 = "Delivery of silver, arrived in 2 silver trucks")
 
 txt %&gt;% dfm(remove = stopwords("english"),
             remove_punct = TRUE,
@@ -183,52 +181,52 @@ txt %&gt;% dfm(remove = stopwords("english"),
 ```
 
 ```
-## Document-feature matrix of: 3 documents, 9 features (51.9% sparse).
-## 3 x 9 sparse Matrix of class "dfm"
+## Document-feature matrix of: 2 documents, 8 features (50.0% sparse).
+## 2 x 8 sparse Matrix of class "dfm"
 ##       features
-## docs   shipment gold damag fire deliveri silver arriv truck karat
-##   doc1        1    1     1    1        0      0     0     0     0
-##   doc2        0    0     0    0        1      2     1     1     0
-##   doc3        1    1     0    0        0      0     1     1     1
+## docs   shipment gold damag fire deliveri silver arriv truck
+##   doc1        1    1     1    1        0      0     0     0
+##   doc2        0    0     0    0        1      2     1     1
 ```
 
-
+Note that we are now down from 14 features to 8.
 
 ---
 
 # `\(n\)`-grams
 
-Sometimes we might care about multiword expressions, e.g., "not guilty", "labor market", etc. 
+- Sometimes we might care about multiword expressions, e.g., "not guilty", "labor market", etc. 
 
-We can define tokens (the basic element of text) as `\(n\)`-gram - a sequence of `\(n\)` words from a given sample of text.
+- We can define tokens (the basic element of text) as `\(n\)`-gram - a sequence of `\(n\)` words from a given sample of text.
 
-NOTE: Using `\(n\)`-gram with `\(n\)`&gt;2 is typically impractical due to the fact that the column dimension of `\(\mathbf{X}\)` increases exponentially with the order `\(n\)`.
+__NOTE:__ Using `\(n\)`-gram with `\(n\)`&gt;2 is typically impractical due to the fact that the column dimension of `\(\mathbf{X}\)` increases exponentially with the order `\(n\)`.
 
 ---
 
-# Example
+# DTM with bigrams
 
 Here is our sample text (just 2 "documents" in this example), where tokens are defined as _bi-gram_ (a sequence of two words):
 
 
 ```r
-txt &lt;- c(doc1 = "Shipment of gold damaged in a fire",
-         doc2 = "Delivery of silver arrived in a silver truck")
-
-txt %&gt;% dfm(ngrams = 2L)
+txt %&gt;% dfm(ngrams =2,
+            remove = stopwords("english"),
+            remove_punct = TRUE,
+            remove_numbers = TRUE,
+            stem = TRUE)
 ```
 
 ```
-## Document-feature matrix of: 2 documents, 12 features (45.8% sparse).
+## Document-feature matrix of: 2 documents, 12 features (50.0% sparse).
 ## 2 x 12 sparse Matrix of class "dfm"
 ##       features
-## docs   shipment_of of_gold gold_damaged damaged_in in_a a_fire delivery_of
-##   doc1           1       1            1          1    1      1           0
-##   doc2           0       0            0          0    1      0           1
+## docs   shipment_of of_gold gold_damag damag_in in_a a_fire deliveri_of
+##   doc1           1       1          1        1    1      1           0
+##   doc2           0       0          0        0    0      0           1
 ##       features
-## docs   of_silver silver_arrived arrived_in a_silver silver_truck
-##   doc1         0              0          0        0            0
-##   doc2         1              1          1        1            1
+## docs   of_silver silver_arriv arriv_in in_silver silver_truck
+##   doc1         0            0        0         0            0
+##   doc2         1            1        1         1            1
 ```
 
 
@@ -262,7 +260,7 @@ name: reg
 
 ---
 
-# This will sounds familiar...
+# This will sound familiar...
 
 
 - We are interested in predicting some `\(Y\)` using `\(\mathbf{X}\)`.
@@ -276,7 +274,7 @@ name: reg
 __EXAMPLE:__ Lasso text regression `glmnet(Y, X)` where
 
 `$$\hat{\beta}=\underset{\beta\in \mathbb{R}^N}{\operatorname{argmin}} \sum_{i=1}^N\left(Y_{i}-X_{i} \beta\right)^{2}+\lambda \lVert\boldsymbol{\beta}\rVert_1$$`
-Can be easily extended to binary / categorical `\(Y\)`, e.g.`glmnet(X, Y, family = "binomial")`
+Can be easily extended to binary / categorical `\(Y\)`, e.g. `glmnet(X, Y, family = "binomial")`
 
 ---
 
@@ -309,9 +307,7 @@ name: dict
 
 - This is by far the most common method in the social science literature using text to date (Gentzkow et al. forthcoming).
 
-- 
-
-- Essentially, Think of `\(F\)` as an unobserved characteristic of the text that we are trying to estimate. A Dictionary-based methods provides a mapping from `\(\mathbf{X}\)` onto `\(F\)`:
+- Essentially, Think of `\(F\)` as an unobserved characteristic of the text that we are trying to estimate. A Dictionary-based methods provides a mapping from `\(\mathbf{X}\)` onto a low dimensional `\(F\)`:
 
 `$$g: \mathbf{X}\rightarrow F$$`
 
@@ -345,16 +341,16 @@ sample_n(get_sentiments("loughran"),8)
 
 ```
 ## # A tibble: 8 x 2
-##   word          sentiment   
-##   &lt;chr&gt;         &lt;chr&gt;       
-## 1 felonious     litigious   
-## 2 untenable     negative    
-## 3 obstructed    negative    
-## 4 claim         litigious   
-## 5 erroneous     negative    
-## 6 necessitate   constraining
-## 7 approximating uncertainty 
-## 8 groundless    negative
+##   word          sentiment
+##   &lt;chr&gt;         &lt;chr&gt;    
+## 1 eroded        negative 
+## 2 restatement   negative 
+## 3 profitability positive 
+## 4 offense       litigious
+## 5 overbuilding  negative 
+## 6 usurping      litigious
+## 7 abrogations   negative 
+## 8 inefficient   negative
 ```
 
 
@@ -682,7 +678,7 @@ _Source_: Hansen, McMahon, and Prat (QJE 2017).
 
 # Counter-cyclical topics
 
-&lt;img src="figs/hansen_pro.png" width="45%" style="display: block; margin: auto;" /&gt;
+&lt;img src="figs/hansen_count.png" width="43%" style="display: block; margin: auto;" /&gt;
 _Source_: Hansen, McMahon, and Prat (QJE 2017).
 
 ---
@@ -694,7 +690,7 @@ _Source_: Hansen, McMahon, and Prat (QJE 2017).
 _Source_: Hansen, McMahon, and Prat (QJE 2017).
 ---
 
-# Increased conformity: increase in similarity
+# Increased conformity: increased document similarity
 
 &lt;img src="figs/hansen_table_VI.png" width="40%" style="display: block; margin: auto;" /&gt;
 

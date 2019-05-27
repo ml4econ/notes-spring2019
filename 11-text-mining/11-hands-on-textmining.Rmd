@@ -67,6 +67,8 @@ month_names <- c("January", "February", "March", "April", "May", "June",
            "July", "August", "September", "October", "November",
            "December")
 
+exclude
+
 boi_dfm_raw <- boi_corpus %>% 
   dfm(remove = c(stopwords(("english")), month_names),
       remove_punct = TRUE,
@@ -100,6 +102,7 @@ boi_dfm_multi <- tokens(boi_corpus) %>%
       stem = FALSE) %>% 
   dfm_trim(min_termfreq = 10,
            min_docfreq = 2)
+
 
 
 ```

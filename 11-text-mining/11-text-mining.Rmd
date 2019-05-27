@@ -29,6 +29,7 @@ if (!require("pacman"))
   install.packages("pacman")
 
 pacman::p_load(quanteda,
+               tidytext,
                tidyverse,
                knitr,
                xaringan,
@@ -148,19 +149,14 @@ __NOTE:__ Spam detection is clearly a supervised learning task where $Y_i=\{\tex
 
 # Transforming a corpus to a DTM
 
-Consider the following corpus ($M=3$):
+Consider the following corpus $(M=3)$:
 
 ```{r}
-txt <- c(doc1 = "Shipment of gold damaged in a fire",
-         doc2 = "Delivery of silver arrived in a silver truck",
-         doc3 = "Shipment of gold arrived in a truck" )
+txt <- c(doc1 = "Shipment of gold damaged in a fire.",
+         doc2 = "Delivery of silver, arrived in 2 silver trucks")
 
 txt %>% quanteda::dfm() # transform text as a document term matrix
 ```
-
-- `nrow(dfm_txt)` returns the number of documents in the corpus.
-- `ncol(dfm_txt)` returns the number of words in the vocabulary.
-- `colnames(dfm_txt)` returns the number of words in the vocabulary
 
 ???
 
@@ -186,9 +182,8 @@ __WARNING:__  Use text prepossessing steps with care. These steps should be appl
 
 Here, we remove stop words, punctuation, numbers, and stem words:
 ```{r}
-txt <- c(doc1 = "Shipment of gold damaged in a fire",
-         doc2 = "Delivery of silver, arrived in a silver truck",
-         doc3 = "Shipment of 2 Karats of gold arrived in a truck" )
+txt <- c(doc1 = "Shipment of gold damaged in a fire.",
+         doc2 = "Delivery of silver, arrived in 2 silver trucks")
 
 txt %>% dfm(remove = stopwords("english"),
             remove_punct = TRUE,
@@ -196,29 +191,30 @@ txt %>% dfm(remove = stopwords("english"),
             stem = TRUE)
 ```
 
-
+Note that we are now down from 14 features to 8.
 
 ---
 
 # $n$-grams
 
-Sometimes we might care about multiword expressions, e.g., "not guilty", "labor market", etc. 
+- Sometimes we might care about multiword expressions, e.g., "not guilty", "labor market", etc. 
 
-We can define tokens (the basic element of text) as $n$-gram - a sequence of $n$ words from a given sample of text.
+- We can define tokens (the basic element of text) as $n$-gram - a sequence of $n$ words from a given sample of text.
 
-NOTE: Using $n$-gram with $n$>2 is typically impractical due to the fact that the column dimension of $\mathbf{X}$ increases exponentially with the order $n$.
+__NOTE:__ Using $n$-gram with $n$>2 is typically impractical due to the fact that the column dimension of $\mathbf{X}$ increases exponentially with the order $n$.
 
 ---
 
-# Example
+# DTM with bigrams
 
 Here is our sample text (just 2 "documents" in this example), where tokens are defined as _bi-gram_ (a sequence of two words):
 
 ```{r}
-txt <- c(doc1 = "Shipment of gold damaged in a fire",
-         doc2 = "Delivery of silver arrived in a silver truck")
-
-txt %>% dfm(ngrams = 2L)
+txt %>% dfm(ngrams =2,
+            remove = stopwords("english"),
+            remove_punct = TRUE,
+            remove_numbers = TRUE,
+            stem = TRUE)
 ```
 
 
@@ -252,7 +248,7 @@ name: reg
 
 ---
 
-# This will sounds familiar...
+# This will sound familiar...
 
 
 - We are interested in predicting some $Y$ using $\mathbf{X}$.
@@ -266,7 +262,7 @@ name: reg
 __EXAMPLE:__ Lasso text regression `glmnet(Y, X)` where
 
 $$\hat{\beta}=\underset{\beta\in \mathbb{R}^N}{\operatorname{argmin}} \sum_{i=1}^N\left(Y_{i}-X_{i} \beta\right)^{2}+\lambda \lVert\boldsymbol{\beta}\rVert_1$$
-Can be easily extended to binary / categorical $Y$, e.g.`glmnet(X, Y, family = "binomial")`
+Can be easily extended to binary / categorical $Y$, e.g. `glmnet(X, Y, family = "binomial")`
 
 ---
 
@@ -299,9 +295,7 @@ name: dict
 
 - This is by far the most common method in the social science literature using text to date (Gentzkow et al. forthcoming).
 
-- 
-
-- Essentially, Think of $F$ as an unobserved characteristic of the text that we are trying to estimate. A Dictionary-based methods provides a mapping from $\mathbf{X}$ onto $F$:
+- Essentially, Think of $F$ as an unobserved characteristic of the text that we are trying to estimate. A Dictionary-based methods provides a mapping from $\mathbf{X}$ onto a low dimensional $F$:
 
 $$g: \mathbf{X}\rightarrow F$$
 
@@ -701,9 +695,9 @@ _Source_: Hansen, McMahon, and Prat (QJE 2017).
 
 # Counter-cyclical topics
 
-```{r, echo=FALSE, out.width = "45%", fig.align='center'}
+```{r, echo=FALSE, out.width = "43%", fig.align='center'}
 
-include_graphics("figs/hansen_pro.png")
+include_graphics("figs/hansen_count.png")
 
 ```
 _Source_: Hansen, McMahon, and Prat (QJE 2017).
@@ -721,7 +715,7 @@ include_graphics("figs/hansen_table_V.png")
 _Source_: Hansen, McMahon, and Prat (QJE 2017).
 ---
 
-# Increased conformity: increase in similarity
+# Increased conformity: increased document similarity
 
 ```{r, echo=FALSE, out.width = "40%", fig.align='center'}
 
