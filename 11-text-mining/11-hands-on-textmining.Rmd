@@ -15,15 +15,20 @@ output:
     keep_md: true
 ---
 
+
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE, cache = TRUE, dpi=300)
+knitr::opts_chunk$set(eval = TRUE,
+                      echo = TRUE,
+                      warning = FALSE,
+                      message = FALSE,
+                      comment = NA,
+                      dpi = 300)
 ```
 
 
-Okay, let's install (if necessary) the packages we need. We will load each package as we proceed.
+Okay, let's install, if necessary, the packages we need. We will load each package as we proceed.
 
 ```{r packages, message=FALSE}
-
 if (!require("pacman")) install.packages("pacman")
 
 pacman::p_install(quanteda,
@@ -33,8 +38,13 @@ pacman::p_install(quanteda,
                   topicmodels,
                   stm,
                   tidytext,
-                  glmnet)
+                  glmnet,
+                  janitor)
+```
 
+
+```{r packages, message=FALSE}
+library(tidyverse)
 theme_set(theme_light())
 ```
 
@@ -42,9 +52,10 @@ theme_set(theme_light())
 
 # Read data
 
-our data is stored in pdf files. 
-
+our data is stored in pdf files. We will read them with the help of the `readtext` package
 ```{r}
+library(readtext)
+
 boi_raw_text <- readtext("11-text-mining/docs/*",
                         docvarsfrom = "filenames",
                         docvarsname = c("year", "month"),
@@ -52,63 +63,81 @@ boi_raw_text <- readtext("11-text-mining/docs/*",
   
 ```
  
-
+Now we will turn raw text to a corpus
 ```{r}
 library(quanteda)
 
 boi_corpus <- corpus(boi_raw_text)
 ```
 
+The next code chunk uses the `corpus_segment` function to cut all the text that comes before the the narrow-discussion section
+```{r}
+boi_corpus_seg <- boi_corpus %>% 
+  corpus_segment(pattern = "THE NARROW-FORUM DISCUSSION",
+                 case_insensitive = FALSE,
+                 extract_pattern = FALSE) 
 
+boi_courpus_seg_docs <- boi_corpus_seg$documents %>% 
+  janitor::clean_names() %>% 
+  filter(segid == 2) %>% 
+  mutate(doc_id = docid, text = texts) %>% 
+  corpus()
+
+```
+
+
+Here we exclude month names from the text (No reason to do this actually. Just for illustration purposes.) We also remove stop words, punctuation marks, numbers, and stem each word.
 
 ```{r }
-
 month_names <- c("January", "February", "March", "April", "May", "June",
            "July", "August", "September", "October", "November",
            "December")
 
-exclude
-
-boi_dfm_raw <- boi_corpus %>% 
+boi_dfm_clean <- boi_courpus_seg_docs %>% 
   dfm(remove = c(stopwords(("english")), month_names),
       remove_punct = TRUE,
       remove_numbers = TRUE,
-      stem = TRUE) %>% 
+      stem = TRUE,
+      verbose = TRUE) %>% 
   dfm_trim(min_termfreq = 10,
            min_docfreq = 2)
+```
 
-
-boi_dfm_raw
-
-topfeatures(boi_dfm_raw)
+Lets have a look at our DTM's top features
+```{r }
+topfeatures(boi_dfm_clean)
 ```
 
 
 ## Multi-word expressions
 
+In this section we look for multi-word expressions , e.g., "interest rate" and "Bank of Israel" and define them as bi- and tri-grams in order to preserve their meaning.
+
 ```{r}
 
-textstat_collocations(boi_corpus)
+textstat_collocations(boi_courpus_seg_docs)
 
-multiword <- c("interest rate", "Bank of Israel", "committee members",
+multiwords <- c("interest rate", "bank of israel", "committee members",
                "monetary committee", "economic activity", "housing market",
-               "global economy")
+               "global economy", "monetary policy", "home prices",
+               "inflation expectations", "world trade", "financial markets",
+               "effective exchange rate")
 
-boi_dfm_multi <- tokens(boi_corpus) %>% 
-  tokens_compound(pattern = phrase(multiword)) %>% 
+boi_dfm_multi <- tokens(boi_courpus_seg_docs) %>% 
+  tokens_compound(pattern = phrase(multiwords)) %>% 
   dfm(remove = c(stopwords(("english")), month_names, "percent"),
       remove_numbers = TRUE,
       remove_punct = TRUE,
-      stem = FALSE) %>% 
+      stem = FALSE,
+      verbose = TRUE) %>% 
   dfm_trim(min_termfreq = 10,
            min_docfreq = 2)
-
-
-
 ```
 
 
 ## Most frequent words
+
+Here we take a glimpse over the most frequent words. We also apply the tf-idf method in order to take into account word frequency between documents.
 
 ```{r}
 topfeatures(boi_dfm_multi, 20)
@@ -121,8 +150,11 @@ topfeatures(boi_dfm_tfmitf, 20)
 
 ## Which words predict rate changes?
 
+Here we'll preform a naive lasso estimation. Specifically, we will use our DTM to predict interest changes (stored in `rate-changes.xlsx`). Then, we will examine which words contribute most to predicting rate changes.
 
+Read the data
 ```{r}
+library(readxl)
 
 df_chng <- read_excel(path = "11-text-mining/data/rate-changes.xlsx",
                       sheet = "data")
@@ -131,11 +163,9 @@ Y <- df_chng %>%
   select(change) %>% 
   pull()
 
-
-
 ```
 
-
+Estimate Lasso
 ```{r }
 
 library(glmnet)
@@ -147,7 +177,7 @@ model <- cv.glmnet(x = boi_dfm_multi, y = Y,
 
 ```
 
-
+Tidy the results using `broom`
 ```{r }
 
 library(broom)
@@ -155,11 +185,13 @@ library(broom)
 coefs <- model$glmnet.fit %>%
   tidy() %>%
   filter(step == 10)
-  #filter(lambda == model$lambda.1se)
+  #filter(lambda == model$lambda.1se) # unfortunatly, setting lambda at its optimal level, leaves us with zero features...
 
 ```
 
+Plot coefficients
 ```{r }
+#devtools::install_github("github.com/dgrtwo/drlib")
 library(drlib)
 
 coefs %>%
@@ -179,26 +211,28 @@ coefs %>%
 
 ## Topic modeling
 
+Here we use the `stm` package to estimate a Correlated Topic Model. Note that we don't run `topicmodels::LDA` since it is much slower.
 ```{r lda_boi, eval = FALSE}
 
 library(stm)
 library(topicmodels)
 
-topic_model <- LDA(convert(boi_dfm_multi, to = "topicmodels"), k = 10)
-get_terms(lda, 5)
+# topic_model <- LDA(convert(boi_dfm_multi, to = "topicmodels"), k = 10)
 
 topic_model <- stm(boi_dfm_multi, K = 4, verbose = FALSE)
 ```
 
 
+Tidy the results and plot $\beta$
 ```{r}
-library(drlib)
+
+library(tidytext)
 
 td_beta <- tidy(topic_model)
 
 td_beta %>%
     group_by(topic) %>%
-    top_n(10, beta) %>%
+    top_n(5, beta) %>%
     ungroup() %>%
     mutate(topic = paste0("Topic ", topic),
            term = reorder_within(term, beta, topic)) %>%
@@ -212,6 +246,7 @@ td_beta %>%
 
 ```
 
+Tidy the results and plot $\gamma$ (The distribution of correlated LDA's $\mu$)
 
 ```{r}
 td_gamma <- tidy(topic_model, matrix = "gamma",                    
@@ -225,6 +260,7 @@ ggplot(td_gamma, aes(gamma, fill = as.factor(topic))) +
        x = expression(gamma))
 ```
 
+Here I'll use Tyler Rinker's `optimal_k` function (see [here]("https://raw.githubusercontent.com/trinker/topicmodels_learning/master/functions")) to estimate the optimal $K$
 
 ```{r optimal_k, eval=FALSE}
 source("11-text-mining/optimal_k.R")
@@ -233,5 +269,5 @@ dtm <- convert(boi_dfm_multi, to = "topicmodels")
 
 control <- list(burnin = 500, iter = 1000, keep = 100)
 
-(k <- optimal_k(dtm, 15, control = control))
+(k <- optimal_k(boi_dfm_multi, 15, control = control))
 ```
